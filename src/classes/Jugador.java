@@ -55,7 +55,7 @@ public class Jugador {
         this.correoElectronico = correoElectronico;
     }
 
-    // Método toString
+    //Devuelve los datos del Jugador como String
     @Override
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -67,10 +67,11 @@ public class Jugador {
                 '}';
     }
 
-    // Método calcularAntiguedad
+    // Devuelve la diferencia en años entre la fecha actual y la fecha de inscripción
     public int calcularAntiguedad() {
         Date ahora = new Date();
         long diferencia = ahora.getTime() - fechaInscripcion.getTime();
         return (int) (diferencia / (1000L * 60 * 60 * 24 * 365)); // Convertir a años
     }
 }
+
