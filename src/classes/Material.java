@@ -1,3 +1,5 @@
+package classes;
+
 public class Material {
     private Integer ID;
     private Tipo Tipo;
