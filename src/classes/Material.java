@@ -21,6 +21,14 @@ public class Material {
     // Constructores
     Material() {}
 
+    /**
+     * 
+     * @param ID Identificador del material
+     * @param Tipo Tipo de Material
+     * @param Uso En donde se puede usar
+     * @param Estado En qué estado se encuentra
+     * 
+     */
     Material(Integer ID, Tipo Tipo, boolean Uso, Estado Estado) {
         this.ID = ID;
         this.Tipo = Tipo;
@@ -62,6 +70,9 @@ public class Material {
         this.Estado = Estado;
     }
 
+    /**
+     * @return return Devuelve los datos del Material como cadena
+     */
     @Override
     public String toString(){
         String Text = "ID: " + getID() + ", Tipo: " + getTipo() + ", Uso: " + isUso() + ", Estado: " + getEstado();

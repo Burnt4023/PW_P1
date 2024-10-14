@@ -15,6 +15,12 @@ public class Jugador {
     public Jugador() {}
 
     // Constructor parametrizado (sin la fecha de inscripción)
+    /**
+     * 
+     * @param nombreApellidos Nombre y Apellidos
+     * @param fechaNacimiento Fecha de Nacimiento
+     * @param correoElectronico Email
+     */
     public Jugador(String nombreApellidos, Date fechaNacimiento, String correoElectronico) {
         this.nombreApellidos = nombreApellidos;
         this.fechaNacimiento = fechaNacimiento;
@@ -55,7 +61,9 @@ public class Jugador {
         this.correoElectronico = correoElectronico;
     }
 
-    //Devuelve los datos del Jugador como String
+    /**
+     * @return Devuelve una cadena con la información del usuario
+     */
     @Override
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -67,11 +75,13 @@ public class Jugador {
                 '}';
     }
 
-    // Devuelve la diferencia en años entre la fecha actual y la fecha de inscripción
+    /**
+     * @return Devuelve el tiempo que lleva inscrito el usuario en años
+     */
     public int calcularAntiguedad() {
         Date ahora = new Date();
         long diferencia = ahora.getTime() - fechaInscripcion.getTime();
-        return (int) (diferencia / (1000L * 60 * 60 * 24 * 365)); // Convertir a años
+        return (int) (diferencia / (1000L * 3600 * 24 * 365)); // Convertir a años
     }
 }
 

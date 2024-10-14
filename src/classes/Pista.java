@@ -24,6 +24,14 @@ public class Pista {
     }
 
     // Constructor parametrizado (sin la lista de materiales)
+    /**
+     * 
+     * @param nombrePista Nombre de la Pista
+     * @param estadoPista Disponible (1) o Ocupado (0)
+     * @param tipoPista Interior (1) o Exterior (0)
+     * @param tamañoPista Tamaño de la Pista
+     * @param maxJugadores Cantidad máxima de jugadores simultaneos
+     */
     public Pista(String nombrePista, boolean estadoPista, boolean tipoPista, TamañoPista tamañoPista, int maxJugadores) {
         this.nombrePista = nombrePista;
         this.estadoPista = estadoPista;
@@ -83,6 +91,9 @@ public class Pista {
     }
 
     // Método toString
+    /**
+     * @return Devuelve los datos de la pista como cadena
+     */
     @Override
     public String toString() {
         return "Pista{" +
@@ -96,10 +107,13 @@ public class Pista {
     }
 
     // Método consultarMaterialesDisponibles
+    /**
+     * @return Devuelve una lista con todos los materiales que estén disponibles
+     */
     public List<Material> consultarMaterialesDisponibles() {
         List<Material> materialesDisponibles = new ArrayList<>();
         for (Material material : materiales) {
-            if (material.getEstado() != Material.Estado.MALO && material.getEstado() != Material.Estado.RESERVADO) {
+            if (material.getEstado() == Material.Estado.DISPONIBLE) {
                 materialesDisponibles.add(material);
             }
         }
@@ -107,6 +121,13 @@ public class Pista {
     }
 
     // Método asociarMaterialAPista
+
+    /**
+     * 
+     * @brief Cuenta el numero de materiales de cada tipo en la lista y, si hay espacio y el tipo de pista es adecuado, lo añade
+     * @param material El material a añadir
+     * @return True si se añade el material, false si no
+     */
     public boolean asociarMaterialAPista(Material material) {
         int pelotasCount = 0;
         int canastasCount = 0;
