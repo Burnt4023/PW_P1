@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Jugador {
+    
     private String nombreApellidos;
     private Date fechaNacimiento;
     private Date fechaInscripcion; // Se inicializa con la fecha actual

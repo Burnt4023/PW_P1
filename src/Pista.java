@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pista {
+    
     private String nombrePista;
     private boolean estadoPista; // true = disponible, false = no disponible
     private boolean tipoPista; // true = interior, false = exterior
@@ -9,7 +10,7 @@ public class Pista {
     private int maxJugadores;
     private List<Material> materiales;
 
-    public enum TamañoPista {
+    private enum TamañoPista {
         MINIBASKET,
         ADULTOS,
         TRES_VS_TRES

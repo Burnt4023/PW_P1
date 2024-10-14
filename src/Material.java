@@ -4,13 +4,13 @@ public class Material {
     private boolean Uso;
     private Estado Estado;
 
-    public enum Tipo {
+    private enum Tipo {
         PELOTA,
         CANASTA,
         CONO
     }
 
-    public enum Estado {
+    private enum Estado {
         DISPONIBLE,
         RESERVADO,
         MALO
@@ -59,6 +59,8 @@ public class Material {
     public void setEstado(Estado Estado) {
         this.Estado = Estado;
     }
+
+    @Override
     public String toString(){
         String Text = "ID: " + getID() + ", Tipo: " + getTipo() + ", Uso: " + isUso() + ", Estado: " + getEstado();
         return Text;
