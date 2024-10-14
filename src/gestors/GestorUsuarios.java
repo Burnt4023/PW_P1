@@ -1,4 +1,6 @@
-package classes;
+package gestors;
+
+import java.io.*; // Gestion de archivos
 
 /**
  * @brief Clase encargada de gestion de usuarios 
@@ -14,6 +16,7 @@ public class GestorUsuarios {
 
 
     // Funciones de la clase
+
 
     /**
      * @brief Constructor default 
@@ -43,7 +46,16 @@ public class GestorUsuarios {
     /**
      * @brief Registra a un nuevo usuario
     */
-    public void registrarUsuario() {}
+    public void registrarUsuario() {
+
+        // NOMBRE DE ARCHIVO DE USUARIOS
+        String ListaUsuarios = "user-list.txt";
+
+
+
+
+
+    }
 
 
     public void darAltaUsuario(){}
@@ -56,8 +68,7 @@ public class GestorUsuarios {
     */
     public void listarUsuariosRegistrados() {
 
-        System.out.println("Usuario:" + " " + Id + " " + Nombre + " " + Apellidos + " " + Dni + " " + Edad);
-
+        System.out.println("Usuario" + Id + ": " + Nombre + " " + Apellidos + " " + Dni + " " + Edad);
     }
     
 }
