@@ -12,7 +12,7 @@ public class Pista {
     private int maxJugadores;
     private List<Material> materiales;
 
-    private enum TamañoPista {
+    public enum TamañoPista {
         MINIBASKET,
         ADULTOS,
         TRES_VS_TRES

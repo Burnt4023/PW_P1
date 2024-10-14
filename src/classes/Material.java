@@ -6,13 +6,13 @@ public class Material {
     private boolean Uso;
     private Estado Estado;
 
-    private enum Tipo {
+    public enum Tipo {
         PELOTA,
         CANASTA,
         CONO
     }
 
-    private enum Estado {
+    public enum Estado {
         DISPONIBLE,
         RESERVADO,
         MALO
