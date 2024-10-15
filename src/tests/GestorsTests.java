@@ -1,6 +1,5 @@
 package tests;
 
-import classes.*;
 import gestors.*;
 
 public class GestorsTests {
@@ -8,19 +7,21 @@ public class GestorsTests {
 
         // EL DIRECTORIO DE COMIENZO ES EL COMIENZO DEL PROYECTO
 
-        Usuario NuevoUsuario = new Usuario("Nombre", "Apellidos", "dniA", 20);
-        Usuario Pepe = new Usuario("Pepe", "garcia", "36478234A", 25);
+        GestorPistas gestor = new GestorPistas();
 
-        GestorUsuarios gestor = new GestorUsuarios();
+        gestor.ListarPistasLibres(5, true);
+        gestor.ListarPistasNoDisponibles();
+        /* 
+        Pista EjemploPista1 = gestor.crearPista("Pista General", true, true, TamanoPista.ADULTOS, 5);
+        Pista EjemploPista2 = gestor.crearPista("Pista Dedicada", false, true, TamanoPista.ADULTOS, 5);
+        Material EjemploMaterial1 = gestor.crearMaterial(00, Material.Tipo.PELOTA, false, Material.Estado.DISPONIBLE);
+        Material EjemploMaterial2 = gestor.crearMaterial(01, Material.Tipo.CANASTA, false, Material.Estado.DISPONIBLE);
 
-        gestor.darAltaUsuario(NuevoUsuario);
-        gestor.darAltaUsuario(Pepe);
+        gestor.AsociarMaterialAPistaDisponible(EjemploMaterial1, EjemploPista1);
+        gestor.AsociarMaterialAPistaDisponible(EjemploMaterial2, EjemploPista2);
 
-
-        gestor.listarUsuariosRegistrados();
-
-        gestor.modificarUsuario("36478234A", "Lucas", "Perez", 26);
-
-        gestor.listarUsuariosRegistrados();
+        gestor.ListarPistasLibres(5, true);
+        gestor.ListarPistasNoDisponibles();
+        */    
     }
 }

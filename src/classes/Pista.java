@@ -121,7 +121,7 @@ public class Pista {
                 ", tipoPista=" + (tipoPista ? "Interior" : "Exterior") +
                 ", tamanoPista=" + tamanoPista +
                 ", maxJugadores=" + maxJugadores +
-                ", materiales=" + materiales.size() +
+                ", num materiales=" + materiales.size() +
                 '}';
     }
 
