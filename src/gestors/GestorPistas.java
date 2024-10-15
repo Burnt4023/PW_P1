@@ -37,56 +37,24 @@ public class GestorPistas {
             while ((linea = reader.readLine()) != null) {
 
                 // Dividir la línea en campos separados por comas
-                String[] campos = linea.split(",");
+                String[] campos = linea.split("/");
 
                 // Verificar que la línea tiene al menos los 5 campos esperados antes de procesar los materiales
-                if (campos.length >= 5) {
+                if (campos.length == 2) {
 
-                    String NombrePista = campos[0].trim();
-                    boolean StatePista = Boolean.parseBoolean(campos[1].trim());
-                    boolean TypePista = Boolean.parseBoolean(campos[2].trim());
-                    TamanoPista TamPista = TamanoPista.valueOf(campos[3].trim().toUpperCase());
-                    int MaxJugadores = Integer.parseInt(campos[4].trim());
+                    String InfoPista = campos[0];
+                    String InfoMateriales = campos[1];
 
-                    //* --- LECTURA DE LOS MATERIALES ---
-
-                    ArrayList<Material> Materials = new ArrayList<>();
-
-                    // Extraer los materiales si los hay (se espera que el campo sea un arreglo vacío "[]" o con detalles de materiales).
-                    if (campos.length == 6) {
-                        String materialesString = campos[5].trim();
-
-                        // Comprobar si hay materiales (no es "[]")
-                        if (!materialesString.equals("[]")) {
-                            
-                            // Quitar los corchetes que delimitan los materiales
-                            materialesString = materialesString.substring(1, materialesString.length() - 1);
-                            String[] materialesArray = materialesString.split("ID: ");  // Dividir los materiales por ID
-
-                            // Procesar cada material
-                            for (String materialInfo : materialesArray) {
-                                if (!materialInfo.isBlank()) {
-                                    // Dividir cada atributo del material
-                                    String[] atributosMaterial = materialInfo.split(",");
-
-                                    int idMaterial = Integer.parseInt(atributosMaterial[0].trim());
-                                    Material.Tipo tipoMaterial = Material.Tipo.valueOf(atributosMaterial[1].split(":")[1].trim());
-                                    boolean usoMaterial = Boolean.parseBoolean(atributosMaterial[2].split(":")[1].trim());
-                                    Material.Estado estadoMaterial = Material.Estado.valueOf(atributosMaterial[3].split(":")[1].trim());
-
-                                    // Crear el objeto Material
-                                    Material material = new Material(idMaterial, tipoMaterial, usoMaterial, estadoMaterial);
-                                    Materials.add(material);  // Añadir a la lista
-                                }
-                            }
-                        }
-                    }
+                    System.out.println(InfoPista);
+                    System.out.println(InfoMateriales);
+                    
+                    //* --- FINALIZACION DE LECTURA DE MATERIALES ---
 
                     // Crear la Pista con los materiales leídos
-                    Pista PistaCargada = new Pista(NombrePista, StatePista, TypePista, TamPista, MaxJugadores, Materials);
+                    //Pista PistaCargada = new Pista(NombrePista, StatePista, TypePista, TamPista, MaxJugadores);
 
                     // Añadir la pista a la lista
-                    ListaPistas.add(PistaCargada);
+                    //ListaPistas.add(PistaCargada);
 
                 } else {
                     System.err.println("[ERROR] No se han obtenido todos los campos para la pista.\n");
@@ -124,7 +92,7 @@ public class GestorPistas {
                 // Linea de registro de usuario
                 String LineaAGuardar = PistaAGuardar.getNombrePista() + "," + PistaAGuardar.isEstadoPista() + ","
                                         + PistaAGuardar.isTipoPista() + "," + PistaAGuardar.getTamanoPista() + ","
-                                        + PistaAGuardar.getMaxJugadores() + "," + PistaAGuardar.getMateriales() + "\n";
+                                        + PistaAGuardar.getMaxJugadores() + "/" + PistaAGuardar.getMateriales() + "\n";
 
                 writer.write(LineaAGuardar);  // Añadir el nuevo usuario en una nueva línea
             }

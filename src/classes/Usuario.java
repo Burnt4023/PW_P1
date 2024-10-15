@@ -3,13 +3,15 @@ package classes;
 
 public class Usuario {
     
-    // Variables
+    //* --- VARIABLES DE LA CLASE --- 
+
     private String Nombre;
     private String Apellidos;
     private String Dni;
     private int Edad;
 
-    // Funciones
+    
+    //* --- FUNCIONES DE LA CLASE ---
     
     /**
      * Default Constructor.

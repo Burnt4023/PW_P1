@@ -9,8 +9,10 @@ public class GestorsTests {
 
         GestorPistas gestor = new GestorPistas();
 
-        gestor.ListarPistasLibres(5, true);
-        gestor.ListarPistasNoDisponibles();
+        //gestor.ListarPistasLibres(5, true);
+        //gestor.ListarPistasNoDisponibles();
+        
+        
         /* 
         Pista EjemploPista1 = gestor.crearPista("Pista General", true, true, TamanoPista.ADULTOS, 5);
         Pista EjemploPista2 = gestor.crearPista("Pista Dedicada", false, true, TamanoPista.ADULTOS, 5);
