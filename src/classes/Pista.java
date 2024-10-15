@@ -41,6 +41,25 @@ public class Pista {
         this.materiales = new ArrayList<>();
     }
 
+    //Constructor con lista de materiales
+    /**
+     * 
+     * @param nombrePista
+     * @param estadoPista
+     * @param tipoPista
+     * @param tamañoPista
+     * @param maxJugadores
+     * @param material
+     */
+    public Pista(String nombrePista, boolean estadoPista, boolean tipoPista, TamañoPista tamañoPista, int maxJugadores, List<Material> material) {
+        this.nombrePista = nombrePista;
+        this.estadoPista = estadoPista;
+        this.tipoPista = tipoPista;
+        this.tamañoPista = tamañoPista;
+        this.maxJugadores = maxJugadores;
+        this.materiales = material;
+    }
+
     // Getters y setters
     public String getNombrePista() {
         return nombrePista;
