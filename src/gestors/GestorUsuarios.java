@@ -2,89 +2,29 @@ package gestors;
 
 import java.io.*; // Gestion de archivos
 import java.util.ArrayList;
-import java.util.List;
 
-/**
- * @brief Clase encargada de gestion de usuarios
-*/
-public class GestorUsuarios {
+import classes.Usuario;
+
+
+public class GestorUsuarios extends Usuario{
     
-    // Variables de la clase
-    String Nombre;
-    String Apellidos;
-    String Dni;
-    int Edad;
+    // Variable de la clase
+    ArrayList<Usuario> usuarios; // Lista de usuarios
 
 
     // Funciones de la clase
 
-
     /**
-     * @brief Constructor default 
+     * Load ArrayList data from 'users-list.txt'. Located in '/data'.
     */
-    private GestorUsuarios() {}
-
-    /**
-     *  @brief Constructor de parametros
-     * @param Nombre_ Nombre del usuario
-     * @param Apellidos_ Apellidos del usuario
-     * @param Dni_ Dni del usuario
-     * @param Edad_ Edad al usuario
-    */
-    private GestorUsuarios( String Nombre_,
-                            String Apellidos_,
-                            String Dni_,
-                            int Edad_) {
-
-        Nombre = Nombre_;
-        Apellidos = Apellidos_;
-        Dni = Dni_;
-        Edad = Edad_;
-    }
-
-    /**
-     * @brief Registra a un nuevo usuario dentro del archivo 'users-list.txt'
-    */
-    private void registrarUsuario() {
-
-        // NOMBRE DE ARCHIVO DE USUARIOS
-        String ListaUsuarios = "../../data/users-list.txt";
-
-        // Linea de registro de usuario
-        String NuevoUsuario = this.Nombre + " " + this.Apellidos + " " + this.Dni + " " + this.Edad + "\n";
-
-        // Excepcion
-        try {
-            
-            // Lector del archivo
-            BufferedWriter writer = new BufferedWriter(new FileWriter(ListaUsuarios, true)); // 'true' para añadir al archivo
-
-            // Escribir el nuevo usuario al final del archivo
-            writer.write(NuevoUsuario);  // Añadir el nuevo usuario en una nueva línea
-
-            // Cerrar el flujo de salida
-            writer.close();
-
-            System.out.println("[OK] Usuario registrado: " + NuevoUsuario);
-
-        } catch (Exception e) {
-
-			System.out.println("[ERROR] No se ha podido crear el usuario.");
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * @brief Da de alta a un usuario, lo resgistra si no lo está.
-    */
-    public void darAltaUsuario() {
+    private void loadData() {
 
         try {
 
-            // Ubicacion del archivo
-            String ListaUsuarios = "../../data/users-list.txt";
+            usuarios.clear();
 
-            // Apertura en modo lectura
+            String ListaUsuarios = "data/users-list.txt";
+
             BufferedReader reader = new BufferedReader(new FileReader(ListaUsuarios));
             String linea;
 
@@ -92,7 +32,7 @@ public class GestorUsuarios {
             while ((linea = reader.readLine()) != null) {
 
                 // Dividir la línea en campos separados por espacios (" ")
-                String[] campos = linea.split(" ");
+                String[] campos = linea.split(",");
 
                 // Verificar que la línea tiene los campos necesarios
                 if (campos.length == 4) {
@@ -101,50 +41,141 @@ public class GestorUsuarios {
                     String DniUser = campos[2];
                     int EdadUser = Integer.parseInt(campos[3]); // Convierte a INT
 
-                    // El usuario ya esta en la lista
-                    if (NombreUser == Nombre && ApellidosUser == Apellidos && DniUser == Dni && EdadUser == Edad) {
-                        System.out.println("[INFO] El usuario actual ya se encuentra registrado.");
-                        break;
-                    }
+                    // Creamos el usuario guardado
+                    Usuario UsuarioCargado = new Usuario(NombreUser, ApellidosUser, DniUser, EdadUser);
+
+                    // Anadir al vector
+                    usuarios.add(UsuarioCargado);
 
                 } else {
-                    System.out.println("[ERROR] No se han obtenido todos los campos.");
+
+                    System.err.println("[ERROR] No se han obtenido todos los campos.\n");
                     break;
                 }
             }
+
             reader.close();
 
-            // El usuario no se encuentra en el archivo
-            System.out.println("[INFO] El usuario actual no esta registrado, se registrara.");
-            this.registrarUsuario();
+            System.out.println("[INFO] Se han cargado todos los usuarios correctamente.\n");
 
-        } catch (IOException e) {
-            System.out.println("[ERROR] No se ha podido obtener informacion del archivo.");
+        } catch (Exception e) {
+            
+            System.err.println("[ERROR] No se han podido cargar los usuarios correctamente.\n");
             e.printStackTrace();
         }
     }
 
     /**
-     * @brief Modifica los datos del usuario
-     * @param Nombre_ El nombre del usuario
-     * @param Apellidos_ Los apellidos del usuario
-     * @param Dni_ El Dni del usuario
-     * @param Edad_ La edad del usuario
+     * Saves ArrayList data from 'users-list.txt'. Located in '/data'.
     */
-    public void modificarUsuario(final String Nombre_, final String Apellidos_, final String Dni_, final int Edad_) {
+    private void saveData() {
+        try {
+            
+            String ListaUsuarios = "data/users-list.txt";
+            
+            BufferedWriter writer = new BufferedWriter(new FileWriter(ListaUsuarios, false)); // false para sobreescribir el archivo
+
+            for (int i = 0; i < usuarios.size(); i++) {
+
+                
+                
+                Usuario UsuarioARegistrar = usuarios.get(i);
+
+                // Linea de registro de usuario
+                String NuevoUsuario = UsuarioARegistrar.getNombre() + "," + UsuarioARegistrar.getApellidos() + "," + UsuarioARegistrar.getDni() + "," + UsuarioARegistrar.getEdad() + "\n";
+
+                writer.write(NuevoUsuario);  // Añadir el nuevo usuario en una nueva línea
+            }
+
+            writer.close();
+
+            System.out.println("[INFO] Usuarios guardados correctamente.\n");
+
+        } catch (Exception e) {
+
+			System.err.println("[ERROR] No se han podido guardar los usuarios.\n");
+            e.printStackTrace();
+        }
+    }
+
+    //* --- FUNCIONES PUBLICAS ---
+
+    /**
+     * @brief Default constructor.
+     * @warning This constructor uses 'users-list.txt' located in '/data'.
+     */
+    public GestorUsuarios() {
+
+        // Iniciacion del ArrayList
+        usuarios = new ArrayList<>();
+
+        // Cargamos inicialmente un usuario vacio para evitar error en .clear().
+        Usuario dummy = new Usuario("null", "null", "null", 0);
+
+        usuarios.add(dummy);
+
+        // Carga los usuarios de los almacenados.
+        loadData();
+    }
+    
+    /**
+     * @brief Registra a un nuevo usuario dentro del archivo 'users-list.txt'.
+     * @param UsuarioARegistrar Usuario que se registrara en el sistema.
+     * @implNote Cada vez que se registra a un usuario, este actualiza el fichero.
+    */
+    private void registrarUsuario(final Usuario UsuarioARegistrar) {
 
         try {
 
-            Nombre = Nombre_;
-            Apellidos = Apellidos_;
-            Dni = Dni_;
-            Edad = Edad_;
+            // Add el nuevo usuario.
+            usuarios.add(UsuarioARegistrar);
+
+            // Guardamos la lista actualizada
+            saveData();
+
+            System.out.println("[INFO] Usuario registrado correctamente.");
 
         } catch (Exception e) {
-            System.out.println("[ERROR] No se han podido modificar los datos del usuario");
-            return;
+            System.err.println("[ERROR] El usuario no ha podido registrarse correctamente.\n");
+            e.getCause();
+        }
+    }
+
+    /**
+     * @brief Da de alta a un usuario, lo resgistra si no lo está.
+     * @param UsuarioAComproabar Usuario al que se registara.
+     * @return TRUE - Si se dio de alta al usuario.
+     * @return FALSE - Si ya estaba registrado.
+     * @warning Carga previamente los usuario dentro del archivo '/data/users-list.txt'
+    */
+    public boolean darAltaUsuario(final Usuario UsuarioAComprobar) {
+
+        try {
+
+            // Comprobar si el usuario nuevo ya esta en la lista.
+            for (int i=0; i < usuarios.size(); i++) {
+
+                Usuario aux = usuarios.get(i);
+    
+                if (UsuarioAComprobar.getDni().equals(aux.getDni())) {
+                    System.out.println("[INFO] El usuario ya esta registrado.\n");
+                    return false;
+                }
+            }
+
+            System.out.println("[INFO] El usuario no se ha encontrado en la lista de registrados, se registrara.\n");
+
+            // Guarda la lista cada vez que se registra un usuario.
+            registrarUsuario(UsuarioAComprobar);
+
+            
+        } catch (Exception e) {
+            
+            System.err.println("[ERROR] Error al dar alta al usuario.\n");
+            e.getCause();
         }
 
+        return true;
     }
 
     /**
@@ -152,7 +183,61 @@ public class GestorUsuarios {
     */
     public void listarUsuariosRegistrados() {
 
-        System.out.println("Usuario: " + Nombre + " " + Apellidos + " " + Dni + " " + Edad);
+        try {
+            
+            for (int i=0; i < usuarios.size(); i++) {
+
+                Usuario aux = usuarios.get(i);
+
+                System.out.println("Usuario: " + aux.getNombre() + " " + aux.getApellidos() + " " + aux.getDni()+ " " + aux.getEdad());
+            }
+
+        } catch (Exception e) {
+            System.err.println("[ERROR] Error al imprimir la lista de usuarios.\n");
+        }
     }
-    
+ 
+    /**
+     * @brief Modifica los datos del usuario, buscandolo por su Dni.
+     * @param Dni_ El Dni del usuario.
+     * @param Nombre_ El nombre del usuario.
+     * @param Apellidos_ Los apellidos del usuario.
+     * @param Edad_ La edad del usuario.
+     * @return TRUE - Si se ha modificado el usuario.
+     * @return FALSE - Si no se ha podido modificar el usuario.
+    */
+    public boolean modificarUsuario(final String Dni_, final String Nombre_, final String Apellidos_, final int Edad_) {
+
+        try {
+            
+            for (int i=0; i < usuarios.size(); i++) {
+
+                Usuario UsuarioAComprobar = usuarios.get(i);
+
+                if (Dni_.equals(UsuarioAComprobar.getDni())) {
+                    // Limpia de la lista el usuario que se va a cambiar.
+                    usuarios.remove(i);
+
+                    UsuarioAComprobar.setNombre(Nombre_);
+                    UsuarioAComprobar.setApellidos(Apellidos_);
+                    UsuarioAComprobar.setEdad(Edad_);
+
+                    // Add el usuario cambiado
+                    usuarios.add(UsuarioAComprobar);
+                    break;
+                }
+            } 
+
+            saveData();
+
+            System.out.println("[INFO] Se ha modificado el usuario correctamente");
+            
+
+        } catch (Exception e) {
+        
+            System.err.println("[ERROR] No se han podido modificar los datos del usuario");
+            return false;
+        }
+        return true;
+    }
 }
