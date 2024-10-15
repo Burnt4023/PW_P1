@@ -8,11 +8,12 @@ import classes.Usuario;
 
 public class GestorUsuarios extends Usuario{
     
-    // Variable de la clase
+    //* --- VARIABLES DE LA CLASE ---
+
     ArrayList<Usuario> usuarios; // Lista de usuarios
 
 
-    // Funciones de la clase
+    //* --- FUNCIONES DE LA CLASE PRIVADAS ---
 
     /**
      * Load ArrayList data from 'users-list.txt'. Located in '/data'.
@@ -98,7 +99,8 @@ public class GestorUsuarios extends Usuario{
         }
     }
 
-    //* --- FUNCIONES PUBLICAS ---
+    
+    //* --- FUNCIONES DE LA CLASE PUBLICAS ---
 
     /**
      * @brief Default constructor.
