@@ -8,11 +8,11 @@ public class Pista {
     private String nombrePista;
     private boolean estadoPista; // true = disponible, false = no disponible
     private boolean tipoPista; // true = interior, false = exterior
-    private TamañoPista tamañoPista;
+    private TamanoPista tamanoPista;
     private int maxJugadores;
     private List<Material> materiales;
 
-    public enum TamañoPista {
+    public enum TamanoPista {
         MINIBASKET,
         ADULTOS,
         TRES_VS_TRES
@@ -29,14 +29,14 @@ public class Pista {
      * @param nombrePista Nombre de la Pista
      * @param estadoPista Disponible (1) o Ocupado (0)
      * @param tipoPista Interior (1) o Exterior (0)
-     * @param tamañoPista Tamaño de la Pista
+     * @param tamanoPista Tamaño de la Pista
      * @param maxJugadores Cantidad máxima de jugadores simultaneos
      */
-    public Pista(String nombrePista, boolean estadoPista, boolean tipoPista, TamañoPista tamañoPista, int maxJugadores) {
+    public Pista(String nombrePista, boolean estadoPista, boolean tipoPista, TamanoPista tamanoPista, int maxJugadores) {
         this.nombrePista = nombrePista;
         this.estadoPista = estadoPista;
         this.tipoPista = tipoPista;
-        this.tamañoPista = tamañoPista;
+        this.tamanoPista = tamanoPista;
         this.maxJugadores = maxJugadores;
         this.materiales = new ArrayList<>();
     }
@@ -85,12 +85,12 @@ public class Pista {
         this.tipoPista = tipoPista;
     }
 
-    public TamañoPista getTamañoPista() {
-        return tamañoPista;
+    public TamanoPista getTamanoPista() {
+        return tamanoPista;
     }
 
-    public void setTamañoPista(TamañoPista tamañoPista) {
-        this.tamañoPista = tamañoPista;
+    public void setTamanoPista(TamanoPista tamanoPista) {
+        this.tamanoPista = tamanoPista;
     }
 
     public int getMaxJugadores() {
@@ -119,7 +119,7 @@ public class Pista {
                 "nombrePista='" + nombrePista + '\'' +
                 ", estadoPista=" + (estadoPista ? "Disponible" : "No disponible") +
                 ", tipoPista=" + (tipoPista ? "Interior" : "Exterior") +
-                ", tamañoPista=" + tamañoPista +
+                ", tamanoPista=" + tamanoPista +
                 ", maxJugadores=" + maxJugadores +
                 ", materiales=" + materiales.size() +
                 '}';

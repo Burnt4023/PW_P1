@@ -29,7 +29,7 @@ public class Material {
      * @param Estado En qué estado se encuentra
      * 
      */
-    Material(Integer ID, Tipo Tipo, boolean Uso, Estado Estado) {
+    public Material(Integer ID, Tipo Tipo, boolean Uso, Estado Estado) {
         this.ID = ID;
         this.Tipo = Tipo;
         this.Uso = Uso;
