@@ -221,7 +221,7 @@ public class GestorPistas {
 
         } catch (Exception e) {
             System.err.println("[ERROR] No se ha podido asocial el material a la pista.\n");
-            e.getCause();
+            e.printStackTrace();
         }
 
         return false;
@@ -254,7 +254,7 @@ public class GestorPistas {
 
         } catch (Exception e) {
             System.err.println("[ERROR] No se pudo listar las pistas no disponibles.\n");
-            e.getCause();
+            e.printStackTrace();
         }
 
     }
@@ -287,7 +287,7 @@ public class GestorPistas {
 
         } catch (Exception e) {
             System.err.println("[ERROR] No se pudo listar las pistas libres.\n");
-            e.getCause();
+            e.printStackTrace();
         }
     }
 

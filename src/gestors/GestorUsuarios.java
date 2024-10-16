@@ -1,10 +1,8 @@
 package gestors;
 
-import java.io.*; // Gestion de archivos
+import classes.Usuario; // Gestion de archivos
+import java.io.*;
 import java.util.ArrayList;
-
-import classes.Usuario;
-
 
 public class GestorUsuarios extends Usuario{
     
@@ -36,14 +34,15 @@ public class GestorUsuarios extends Usuario{
                 String[] campos = linea.split(",");
 
                 // Verificar que la línea tiene los campos necesarios
-                if (campos.length == 4) {
+                if (campos.length == 5) {
                     String NombreUser = campos[0];
                     String ApellidosUser = campos[1];
                     String DniUser = campos[2];
                     int EdadUser = Integer.parseInt(campos[3]); // Convierte a INT
+                    String FechaInscripcionString = campos[4];
 
                     // Creamos el usuario guardado
-                    Usuario UsuarioCargado = new Usuario(NombreUser, ApellidosUser, DniUser, EdadUser);
+                    Usuario UsuarioCargado = new Usuario(NombreUser, ApellidosUser, DniUser, EdadUser, convertString2Date(FechaInscripcionString));
 
                     // Anadir al vector
                     usuarios.add(UsuarioCargado);
@@ -71,7 +70,7 @@ public class GestorUsuarios extends Usuario{
     */
     private void saveData() {
         try {
-            
+
             String ListaUsuarios = "data/users-list.txt";
             
             BufferedWriter writer = new BufferedWriter(new FileWriter(ListaUsuarios, false)); // false para sobreescribir el archivo
@@ -83,7 +82,9 @@ public class GestorUsuarios extends Usuario{
                 Usuario UsuarioARegistrar = usuarios.get(i);
 
                 // Linea de registro de usuario
-                String NuevoUsuario = UsuarioARegistrar.getNombre() + "," + UsuarioARegistrar.getApellidos() + "," + UsuarioARegistrar.getDni() + "," + UsuarioARegistrar.getEdad() + "\n";
+                String NuevoUsuario = UsuarioARegistrar.getNombre() + "," + UsuarioARegistrar.getApellidos() + "," +
+                                        UsuarioARegistrar.getDni() + "," + UsuarioARegistrar.getEdad() + "," + 
+                                        UsuarioARegistrar.getStringFormatedFechaInscripcion() + "\n";
 
                 writer.write(NuevoUsuario);  // Añadir el nuevo usuario en una nueva línea
             }
@@ -191,7 +192,7 @@ public class GestorUsuarios extends Usuario{
 
                 Usuario aux = usuarios.get(i);
 
-                System.out.println("Usuario: " + aux.getNombre() + " " + aux.getApellidos() + " " + aux.getDni()+ " " + aux.getEdad());
+                System.out.println("Usuario: " + aux.getNombre() + " " + aux.getApellidos() + " " + aux.getDni()+ " " + aux.getEdad() + " " + aux.getStringFormatedFechaInscripcion());
             }
 
         } catch (Exception e) {

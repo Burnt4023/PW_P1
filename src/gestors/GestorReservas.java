@@ -1,27 +1,99 @@
 package gestors;
 
+import classes.*;
+import java.util.Date;
 
 /**
- * @brief Clase GestorReservas. Encargada de realizar las reservas
- * 
- * Id_ Identificador del usuario que realiza la reserva
- * Fecha_ Fecha de la reserva
- * Hora_ Hora de la reserva
- * Precio_ Precio de la reserva
- * Descuento_ Descuento de la reserva
+ * Clase del gestor de las reservas. 
 */
 public class GestorReservas {
     
-    //private
-    private String Id_;
-    private String Fecha_;
-    private String Hora_;
+    //* --- VARIABLES DE LA CLASE ---
 
-    private float Precio_;
-    private float Descuento_;
+    Usuario User;
+    Reserva Reserve;
+    Date fechaActual;
+
+
+
+
+
+    //* --- FUNCIONES DE LA CLASE ---
+
+    /**
+     * Default constructor. 
+    */
+    public GestorReservas() {}
     
-    //public:
 
-    
+    public boolean hacerReservaIndividual(Usuario user, Pista PistaAReservar) {
 
+        
+        return true;
+    }
+
+    public boolean hacerReservaConBono(Bono BonoUsuario, Usuario user, Pista PistaAReservar) {
+
+        return true;
+    }
+
+    /**
+     * Obtiene el precio de las horas de una reserva.
+     * @param minutes Minutos que se reservara una pista.
+     * @return Cantidad en EUR que cuesta la reserva.
+     * @return -1 Si las cantidad de minutos no es la esperada.
+     * @warning Las cantidades de minutos aceptadas son: 60, 90 y 120.
+     */
+    protected int getPrecioReserva(int minutes) {
+
+        if (minutes == 60) {
+            return 20;
+        } else if (minutes == 90) {
+            return 30;
+        } else if (minutes == 120) {
+            return 40;
+        }
+
+        return -1;
+    }
+
+    /**
+     * Comprueba si una pista puede modificarse. Una pista puede ser modificada 24h antes de que empiece.
+     * @param PistaConcreta
+     * @return true - Si la pista puede ser modificada.
+     * @return false - Si la pista no puede ser modificada.
+    */
+    protected boolean checkIfPistaCanBeModified(Pista PistaConcreta) {
+
+        return true;
+    }
+
+    /**
+     * To comment. 
+    */
+    public void verReservasFuturas() {
+
+
+    }
+
+    /**
+     * To comment. 
+    */
+    public void verReserva(Date day) {
+
+    }
+
+    /**
+     * To comment. 
+    */
+    public void verreserva(Pista PistaConcreta) {
+
+    }
+
+    /**
+     * To comment. 
+    */
+    public void verReserva(Date day, Pista PistaConcreta) {
+
+    }
 }
