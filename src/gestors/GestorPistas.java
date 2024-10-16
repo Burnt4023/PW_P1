@@ -28,36 +28,59 @@ public class GestorPistas {
 
             ListaPistas.clear();
 
+            Pista PistaCargada = null;
+            ArrayList<Material> materialesTemp = new ArrayList<>();
+
             String filename = "data/pistas-list.txt";
 
             BufferedReader reader = new BufferedReader(new FileReader(filename));
             String linea;
 
-            // Leer línea por línea el archivo
             while ((linea = reader.readLine()) != null) {
 
-                // Dividir la línea en campos separados por comas
-                String[] campos = linea.split("/");
+                //* LEE LA PRIMERA LINEA
 
-                // Verificar que la línea tiene al menos los 5 campos esperados antes de procesar los materiales
-                if (campos.length == 2) {
+                String[] campos = linea.split(",");
 
-                    String InfoPista = campos[0];
-                    String InfoMateriales = campos[1];
-
-                    System.out.println(InfoPista);
-                    System.out.println(InfoMateriales);
+                if (campos.length == 5) {
                     
-                    //* --- FINALIZACION DE LECTURA DE MATERIALES ---
+                    //* --- CARGA DE PISTAS ---
 
+                    String NombrePista = campos[0];
+                    boolean EstadoPista = Boolean.parseBoolean(campos[1]);
+                    boolean TipoPista = Boolean.parseBoolean(campos[2]);
+                    TamanoPista TamanoPistaObtained = TamanoPista.valueOf(campos[3]);
+                    int MaxJugadoresPista = Integer.parseInt(campos[4]);
+                    
                     // Crear la Pista con los materiales leídos
-                    //Pista PistaCargada = new Pista(NombrePista, StatePista, TypePista, TamPista, MaxJugadores);
+                    PistaCargada = new Pista(NombrePista, EstadoPista, TipoPista, TamanoPistaObtained, MaxJugadoresPista);
+                    materialesTemp = new ArrayList<>();
 
-                    // Añadir la pista a la lista
-                    //ListaPistas.add(PistaCargada);
+                } else if (campos.length == 4) {
+                    
+                    //*  --- CARGA DE MATERIALES ---
+
+                    int Id = Integer.parseInt(campos[0]);
+                    Tipo Type = Tipo.valueOf(campos[1]);
+                    boolean Use = Boolean.parseBoolean(campos[2]);
+                    Estado State = Estado.valueOf(campos[3]);
+
+                    // Crear material
+                    Material MaterialCargado = new Material(Id, Type, Use, State);
+                    materialesTemp.add(MaterialCargado);
+
+                } else if (campos.length == 1 && campos[0].equals("%")) {
+
+                    // Final de carga de pista con todos los materiales
+
+                    if (PistaCargada != null) {
+                        
+                        PistaCargada.setMateriales(materialesTemp);  // Asignar los materiales a la pista
+                        ListaPistas.add(PistaCargada);  // Agregar la pista a la lista
+                    }
 
                 } else {
-                    System.err.println("[ERROR] No se han obtenido todos los campos para la pista.\n");
+                    System.err.println("[ERROR] No se han obtenido todos los campos al cargar las pistas.\n");
                     break;
                 }
             }
@@ -92,7 +115,19 @@ public class GestorPistas {
                 // Linea de registro de usuario
                 String LineaAGuardar = PistaAGuardar.getNombrePista() + "," + PistaAGuardar.isEstadoPista() + ","
                                         + PistaAGuardar.isTipoPista() + "," + PistaAGuardar.getTamanoPista() + ","
-                                        + PistaAGuardar.getMaxJugadores() + "/" + PistaAGuardar.getMateriales() + "\n";
+                                        + PistaAGuardar.getMaxJugadores() + "\n";
+
+                for (int j = 0; j < PistaAGuardar.getMateriales().size(); j++) {
+
+                    String LineaMaterial = PistaAGuardar.getMateriales().get(j).getID()  + "," +
+                                            PistaAGuardar.getMateriales().get(j).getTipo() + "," +
+                                            PistaAGuardar.getMateriales().get(j).isUso() + "," +
+                                            PistaAGuardar.getMateriales().get(j).getEstado() + "\n";
+
+                    LineaAGuardar +=  LineaMaterial;
+                }
+
+                LineaAGuardar += "%" + "\n";
 
                 writer.write(LineaAGuardar);  // Añadir el nuevo usuario en una nueva línea
             }

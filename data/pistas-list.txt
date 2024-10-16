@@ -1,2 +1,6 @@
-Pista General,true,true,ADULTOS,5/[]
-Pista Dedicada,false,true,ADULTOS,5/[]
+Pista General,true,true,ADULTOS,5
+0,PELOTA,false,DISPONIBLE
+1,CANASTA,false,DISPONIBLE
+%
+Pista Dedicada,false,true,ADULTOS,5
+%
