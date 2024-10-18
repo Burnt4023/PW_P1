@@ -1,4 +1,6 @@
+import classes.Pista;
 import classes.Usuario;
+import classes.Pista.TamanoPista;
 import gestors.*;
 import java.util.Scanner;
 public class App {
@@ -45,8 +47,7 @@ public class App {
 
                 // Pistas.
                 case "3" -> {
-                    System.out.println("Has seleccionado Gestión de Pistas.");
-                    pause(); // Pausa para que el usuario vea el mensaje
+                    subMenuPistas(scanner, gestorPistas);
                 }
 
                 // Salir.
@@ -66,8 +67,7 @@ public class App {
         scanner.close();
     }
 
-
-    //* SUBMENUS
+    //* --- SUBMENUS ---
 
     /**
      * Muestra un SubMenu interactivo para gestionar usuarios.
@@ -76,7 +76,6 @@ public class App {
     */
     private static void subMenuUsuarios(Scanner scanner, GestorUsuarios gestorUsuarios) {
 
-        // Iniciar el scanner.
         boolean running = true;
         String field1, field2, field3, field4, field5;
 
@@ -182,8 +181,114 @@ public class App {
         //return;
     }
 
+    /**
+     * Muestra un subMenu interectivo para gestionar pistas.
+     * @param scanner - Scanner heredado del menu principal.
+     * @param gestorpistas - El gestor de pistas.
+     */
+    private static void subMenuPistas(Scanner scanner, GestorPistas gestorPistas) {
 
-    //* FUNCIONES AUXILIARES
+        boolean running = true;
+        String field1, field2, field3, field4, field5;
+
+        // Bucle principal del menú
+        while (running) {
+            // Limpiar la pantalla (simulación imprimiendo muchas líneas en blanco)
+            clearScreen();
+
+            // Mostrar el menú
+            System.out.println("--- GESTION DE PISTAS ---\n");
+            System.out.println("1. Crear nueva pista");
+            System.out.println("2. crear nuevo material");
+            System.out.println("3. Asociar material a pista");
+            System.out.println("4. Listar pistas libres");
+            System.out.println("5. Atras");
+            System.out.print("\nSeleccione una opción: ");
+            
+            // Leer la opción del usuario
+            String option = scanner.nextLine();
+
+            // Procesar la opción seleccionada
+            switch (option) {
+
+                // Crear pista.
+                case "1" -> {
+                    
+                    clearScreen();
+                    System.out.println("\n- [CREAR NUEVA PISTA] -\n");
+
+                    // Obtener datos de la pista
+                    System.out.print("- Nombre de la pista: ");
+                    field1 = scanner.nextLine();
+
+                    System.out.print("- Tipo pista (Exterior[0]/Interior[1]): ");
+                    field2 = scanner.nextLine();
+                    boolean tipoPista = Integer.parseInt(field2) == 1;  // Convertir a booleano (1 = Interior, 0 = Exterior)
+
+                    System.out.print("- Tamaño de la pista (Minibasket[0]/Adultos[1]/3vs3[2]): ");
+                    field3 = scanner.nextLine();
+                    TamanoPista tamanoPista = switch (field3) {  // Convertir a enum
+                        case "0" -> TamanoPista.MINIBASKET;
+                        case "1" -> TamanoPista.ADULTOS;
+                        case "2" -> TamanoPista.TRES_VS_TRES;
+                        default -> throw new IllegalArgumentException("Tamaño de pista no válido");
+                    };
+
+                    System.out.print("- Número máximo de jugadores: ");
+                    field4 = scanner.nextLine();
+                    int maxJugadores = Integer.parseInt(field4);  // Convertir a entero
+
+                    // Crear la nueva pista con los valores obtenidos
+                    Pista pista = new Pista(field1, true, tipoPista, tamanoPista, maxJugadores);
+
+                    // Aquí podrías añadir la pista a algún gestor de pistas o a una lista.
+                    gestorPistas.
+
+                    System.out.println("\n+ Pista creada exitosamente.");
+                    pause();  // Pausar para que el usuario pueda ver el mensaje      Integer.parseInt(field3), Integer.parseInt(field4));
+
+                }
+
+                // Crear Material.
+                case "2" -> {
+                    
+                    
+                }
+
+                // Asociar Material a pista.
+                case "3" -> {
+
+                    
+                }
+                
+                // Listar pistas libres.
+                case "4" -> {
+                    
+                }
+
+                // Atras.
+                case "5" -> {
+                    running = false; // Terminar el bucle
+                }
+
+                // opcion no valida.
+                default -> {
+                    System.out.println("\n+ Opción no válida. Intente de nuevo.");
+                    sleep(1);
+                }
+            }
+        }
+
+        //return;
+
+
+
+
+    }
+
+
+
+    //* --- FUNCIONES AUXILIARES ---
 
     // Método para simular la limpieza de pantalla imprimiendo 50 líneas en blanco
     private static void clearScreen() {

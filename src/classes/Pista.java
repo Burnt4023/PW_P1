@@ -15,7 +15,7 @@ public class Pista {
     public enum TamanoPista {
         MINIBASKET,
         ADULTOS,
-        TRES_VS_TRES
+        TRES_VS_TRES;
     }
 
     // Constructor vacío

@@ -15,6 +15,7 @@ public class GestorPistas {
     //* --- VARIABLES DE LA CLASE ---
 
     ArrayList<Pista> ListaPistas;
+    ArrayList<Material> ListaMateriales;
 
 
     //* --- FUNCIONES DE LA CLASE PRIVADAS ---
@@ -181,6 +182,27 @@ public class GestorPistas {
     }
 
     /**
+     * Añade al vector de pistas la pista pasada por referencia.
+     * @param pista - Pista que se añadira al vector.
+     * @return true - Si se añadio correctamente.
+     * @return false - Si no se pudo añadir.
+     */
+    public boolean crearPista(Pista pista) {
+
+        try {
+
+            ListaPistas.add(pista);
+
+            saveData();
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
      * Crea un material.
      * @param Id
      * @param Type
@@ -193,6 +215,19 @@ public class GestorPistas {
         Material NuevoMaterial = new Material(Id, Type, Uso, State);
 
         return NuevoMaterial;
+    }
+
+    public boolean crearMaterial(Material material) {
+    
+        try {
+            
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 
     /**
