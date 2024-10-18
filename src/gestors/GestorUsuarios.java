@@ -91,7 +91,7 @@ public class GestorUsuarios extends Usuario{
 
             writer.close();
 
-            System.out.println("[INFO] Usuarios guardados correctamente.\n");
+            //System.out.println("[INFO] Usuarios guardados correctamente.\n");
 
         } catch (Exception e) {
 
@@ -136,7 +136,7 @@ public class GestorUsuarios extends Usuario{
             // Guardamos la lista actualizada
             saveData();
 
-            System.out.println("[INFO] Usuario registrado correctamente.");
+            //System.out.println("[INFO] Usuario registrado correctamente.");
 
         } catch (Exception e) {
             System.err.println("[ERROR] El usuario no ha podido registrarse correctamente.\n");
@@ -161,12 +161,12 @@ public class GestorUsuarios extends Usuario{
                 Usuario aux = usuarios.get(i);
     
                 if (UsuarioAComprobar.getDni().equals(aux.getDni())) {
-                    System.out.println("[INFO] El usuario ya esta registrado.\n");
+                    //System.out.println("[INFO] El usuario ya esta registrado.\n");
                     return false;
                 }
             }
 
-            System.out.println("[INFO] El usuario no se ha encontrado en la lista de registrados, se registrara.\n");
+            //System.out.println("[INFO] El usuario no se ha encontrado en la lista de registrados, se registrara.\n");
 
             // Guarda la lista cada vez que se registra un usuario.
             registrarUsuario(UsuarioAComprobar);
@@ -192,7 +192,7 @@ public class GestorUsuarios extends Usuario{
 
                 Usuario aux = usuarios.get(i);
 
-                System.out.println("Usuario: " + aux.getNombre() + " " + aux.getApellidos() + " " + aux.getDni()+ " " + aux.getEdad() + " " + aux.getStringFormatedFechaInscripcion());
+                System.out.println(i+1 + ". " + aux.getNombre() + " " + aux.getApellidos() + " " + aux.getDni()+ " " + aux.getEdad() + " " + aux.getStringFormatedFechaInscripcion());
             }
 
         } catch (Exception e) {
@@ -227,13 +227,12 @@ public class GestorUsuarios extends Usuario{
 
                     // Add el usuario cambiado
                     usuarios.add(UsuarioAComprobar);
-                    break;
+
+                    saveData();
+
+                    return true;
                 }
-            } 
-
-            saveData();
-
-            System.out.println("[INFO] Se ha modificado el usuario correctamente");
+            }
             
 
         } catch (Exception e) {
@@ -241,6 +240,6 @@ public class GestorUsuarios extends Usuario{
             System.err.println("[ERROR] No se han podido modificar los datos del usuario");
             return false;
         }
-        return true;
+        return false;
     }
 }
