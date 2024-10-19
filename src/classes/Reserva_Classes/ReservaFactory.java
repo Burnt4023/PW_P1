@@ -1,21 +1,28 @@
 package classes.Reserva_Classes;
 
+import classes.Usuario;
+import classes.Pista;
 
-//* ----- CLASE FACTORY -----
+
+
+//* ----- Clase ReservaFactory
 public class ReservaFactory {
     
-    public static Reserva crearReserva(String tipoReserva)
+    public static Reserva crearReserva(String tipoReserva, Usuario usuario, Pista pista, int NumeroNinos, int NumeroAdultos)
     {
         switch (tipoReserva) // Según el tipo de reserva deseado, se instanciará una subclase u otra.
         {
             case "Infantil":
-                return new ReservaInfantil();
+                // Se instancia una clase de tipo ReservaInfantil
+                return new ReservaInfantil(usuario, pista, NumeroNinos);
 
             case "Familiar":
-                return new ReservaFamiliar();
+                // Se instancia una clase de tipo ReservaFamiliar
+                return new ReservaFamiliar(usuario, pista, NumeroNinos, NumeroAdultos);
 
             case "Adultos":
-                return new ReservaAdultos();
+                // Se instancia una clase de tipo ReservaAdultos
+                return new ReservaAdultos(usuario);
                     
             default:
                 throw new IllegalArgumentException("Tipo de reserva no soportado");
@@ -23,3 +30,16 @@ public class ReservaFactory {
     }
     
 }
+
+
+//* ----- Ejemplo de Implementación Reservas en la App
+
+    // String tipoReserva = "Adultos"; // Esto podría venir de un formulario en la UI, por ejemplo.
+
+    // Crear una reserva usando la fábrica
+    // Reserva reserva = ReservaFactory.crearReserva(tipoReserva, usuario, pista, 0, 5);
+    // Eso crearía una reserva para 5 adultos
+
+
+    // Ahora ya se puede trabajar con la reserva creada
+    // System.out.println(reserva.toString()); ...

@@ -4,21 +4,6 @@ import java.util.Date;
 
 
 
-/**
-    >> El Patrón Factory es un patrón de diseño que se utiliza para delegar la creación
-    de objetos a una clase "fábrica", en lugar de crear instancias directamente en el código.
-
-
-    Clase Reserva es de tipo abstracto (es decir, nunca se instanciará).
-
-    Las clases ReservaInfantil, ReservaFamiliar, y ReservaAdultos serán subclases de Reserva.
-    Cada clase debe estar en un fichero por separado.
-
-    Y la clase ReservaFactory será la encargada de crear los distintos tipos de Reserva,
-    según el tipo de reserva que se necesite instanciar.
-
-*/
-
 public abstract class Reserva {
 
         private String IdUsuario_;  // Usuario que realiza la reserva.
@@ -74,4 +59,25 @@ public abstract class Reserva {
             this.Descuento_ = Descuento;
         }
 
+        // Método abstracto toString(), para que cada subclase sobreescriba el método y que
+        // así se muestre información específica de cada tipo de reserva.
+        public abstract String toString();
+
     }
+
+
+
+/**
+    >>> El Patrón "Factory" es un patrón de diseño que se utiliza para delegar la creación
+    de objetos a una clase "fábrica", en lugar de crear instancias directamente en el código.
+
+    
+    Clase Reserva es de tipo abstracto (es decir, nunca se instanciará).
+
+    Las clases ReservaInfantil, ReservaFamiliar, y ReservaAdultos serán subclases de Reserva.
+    Cada clase debe estar en un fichero por separado.
+
+    Y la clase ReservaFactory será la encargada de crear los distintos tipos de Reserva,
+    según el tipo de reserva que se necesite instanciar.
+
+*/
