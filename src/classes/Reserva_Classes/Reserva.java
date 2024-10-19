@@ -1,4 +1,4 @@
-package classes;
+package classes.Reserva_Classes;
 
 import java.util.Date;
 
@@ -12,8 +12,9 @@ import java.util.Date;
     Clase Reserva es de tipo abstracto (es decir, nunca se instanciará).
 
     Las clases ReservaInfantil, ReservaFamiliar, y ReservaAdultos serán subclases de Reserva.
+    Cada clase debe estar en un fichero por separado.
 
-    La clase ReservaFactory será la encargada de crear los distintos tipos de Reserva,
+    Y la clase ReservaFactory será la encargada de crear los distintos tipos de Reserva,
     según el tipo de reserva que se necesite instanciar.
 
 */
@@ -72,74 +73,5 @@ public abstract class Reserva {
         public void setDescuento(boolean Descuento) {
             this.Descuento_ = Descuento;
         }
-}
 
-
-
-
-// ----- CLASE FACTORY -----
-public class ReservaFactory {
-    
-    public static Reserva crearReserva(String tipoReserva)
-    {
-        switch (tipoReserva) // Según el tipo de reserva deseado, se instanciará una subclase u otra.
-        {
-            case "Infantil":
-                return new ReservaInfantil();
-
-            case "Familiar":
-                //return new ReservaFamiliar();
-
-            case "Adultos":
-                //return new ReservaAdultos();
-                    
-            default:
-                throw new IllegalArgumentException("Tipo de reserva no soportado");
-        }
     }
-    
-}
-
-
-
-//* ----- ReservaInfantil -----
-public class ReservaInfantil extends Reserva {
-
-        // Constructor específico
-        public ReservaInfantil()
-        {
-            super(); // Llama al constructor de Reserva
-            // Podrías poner comportamientos específicos de una reserva infantil aquí
-        }
-}
-
-
-//* ----- ReservaFamiliar -----
-public class ReservaFamiliar extends Reserva {
-
-    // Constructor para la reserva familiar
-    public ReservaFamiliar() {
-        super();
-        //Aquí se pueden añadir comportamientos o atrib. especiales de reserva familiar...
-    }
-
-
-}
-
-    
-    //* ----- ReservaAdultos -----
-public class ReservaAdultos extends Reserva {
-
-
-    // Constructor espeífico para la reserva de adultos
-    public ReservaAdultos() {
-        super();
-        //
-    }
-
-
-}
-
-
-
-

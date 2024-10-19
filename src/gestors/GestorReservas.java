@@ -1,6 +1,8 @@
 package gestors;
 
 import classes.*;
+import classes.Reserva_Classes.Reserva;
+
 import java.util.Date;
 
 /**
