@@ -134,6 +134,7 @@ public class ReservaAdultos extends Reserva {
     // Constructor espeífico para la reserva de adultos
     public ReservaAdultos() {
         super();
+        //
     }
 
 
