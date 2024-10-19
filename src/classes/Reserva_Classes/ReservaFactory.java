@@ -28,7 +28,7 @@ public class ReservaFactory {
                 throw new IllegalArgumentException("Tipo de reserva no soportado");
         }
     }
-    
+
 }
 
 

@@ -12,9 +12,33 @@ public abstract class Reserva {
         private float Precio_;  // En euros.
         private boolean Descuento_;
 
+        private String IdBono_; // Usado si se aplica bono
+        private int NumeroSesion_; // Usado si se aplica bono
+
 
         //Constructor vacío (sin parámetros)
         public Reserva() {}
+
+        //Constructor clase Reserva
+        public Reserva(String IdUsuario, Date Fecha, int Duracion, float Precio, boolean Descuento) {
+            IdUsuario_ = IdUsuario;
+            Fecha_ = Fecha;
+            Duracion_ = Duracion;
+            Precio_ = Precio;
+            Descuento_ = Descuento;
+        }
+
+        //Constructor clase Reserva (con Bono)
+        public Reserva(String IdUsuario, Date Fecha, int Duracion, float Precio, boolean Descuento, String IdBono, int NumeroSesion) {
+            IdUsuario_ = IdUsuario;
+            Fecha_ = Fecha;
+            Duracion_ = Duracion;
+            Precio_ = Precio;
+            Descuento_ = Descuento;
+
+            IdBono_ = IdBono;
+            NumeroSesion_ = NumeroSesion;
+        }
 
         // Getters
         public String getIdUsuario() {
@@ -35,6 +59,14 @@ public abstract class Reserva {
 
         public boolean getDescuento() {
             return Descuento_;
+        }
+
+        public String getIdBono() {
+            return IdBono_;
+        }
+
+        public int getNumeroSesion()  {
+            return NumeroSesion_;
         }
 
         

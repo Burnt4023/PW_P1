@@ -7,6 +7,7 @@ public class Bono {
 
     // Variables de la clase.
 
+    String IdBono; // Identificador del bono.
     TamanoPista TipoDeSesion; // Especifica que tipo de bono es.
     Usuario UsuarioAsociado;
     int UsosRestantes;
@@ -23,9 +24,10 @@ public class Bono {
     /**
      * Constructor con parametros. 
     */
-    public Bono(TamanoPista TipoDeSesion_,
+    public Bono(String IdBono2, TamanoPista TipoDeSesion_,
                 Usuario UsuarioAsociado_) {
 
+        IdBono = IdBono2;
         TipoDeSesion = TipoDeSesion_;
         UsuarioAsociado = UsuarioAsociado_;
         UsosRestantes = 5; // 5 Usos por bono.
