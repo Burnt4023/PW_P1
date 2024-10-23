@@ -394,7 +394,90 @@ public class App {
         //return;
     }
 
+    /**
+     * Muestra un submenu interectivo para gestionar las reservas.
+     * @param scanner - Scanner heredado del menu principal.
+     * @param gestorReservas - El gestor de reservas.
+     */
+    private static void subMenuReservas(Scanner scanner, GestorReservas gestorReservas) {
 
+        boolean running = true;
+        String field1, field2, field3, field4, field5; // Utilizar para obtener variables por linea de comandos.
+
+        // Bucle principal del menú
+        while (running) {
+            // Limpiar la pantalla (simulación imprimiendo muchas líneas en blanco)
+            clearScreen();
+
+            // Mostrar el menú
+            System.out.println("--- GESTION DE PISTAS ---\n");
+            System.out.println("1. Hacer reserva individual");
+            System.out.println("2. Hacer reserva con bono");
+            System.out.println("3. Modificar reserva");
+            System.out.println("4. Eliminar reserva");
+            System.out.println("5. Listar reservas futuras");
+            System.out.println("6. Listar reservas en un dia determinado");
+            System.out.println("7. Atras");
+            System.out.print("\nSeleccione una opción: ");
+            
+            // Leer la opción del usuario
+            String option = scanner.nextLine();
+
+            // Procesar la opción seleccionada
+            switch (option) {
+
+                // Hacer reserva.
+                case "1" -> {
+
+                    System.out.println("Introduce una linea de caracteres: "); // Mostrar mensajes.
+                    field1 = scanner.nextLine(); // Obtener datos del buffer de entrada.
+                    int ejemplo = Integer.parseInt(field1); // Conversion de String a Integer.
+
+                }
+
+                // Hacer reserva con bono.
+                case "2" -> {
+                    
+
+                }
+
+                // Modificar reserva.
+                case "3" -> {
+
+
+                }
+                
+                // Eliminar reserva.
+                case "4" -> {
+
+
+                }
+
+                // Listar reservas futuras.
+                case "5" -> {
+                    
+                }
+
+                // Listar reservas en dia determinado.
+                case "6" -> {
+                    
+                }
+
+                // Atras.
+                case "7" -> {
+                    running = false; // Terminar el bucle
+                }
+
+                // opcion no valida.
+                default -> {
+                    System.out.println("\n+ Opción no válida. Intente de nuevo.");
+                    sleep(1);
+                }
+            }
+        }
+
+        //return;
+    }
 
     //* --- FUNCIONES AUXILIARES ---
 
