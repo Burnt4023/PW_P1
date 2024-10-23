@@ -2,7 +2,7 @@ package gestors;
 
 import classes.*;
 import classes.Reserva_Classes.Reserva;
-
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -12,24 +12,46 @@ public class GestorReservas {
     
     //* --- VARIABLES DE LA CLASE ---
 
-    Usuario User;
-    Reserva Reserve;
-    Date fechaActual;
-
-
-
-
+    ArrayList<Reserva> ListaReservasAdultos;
+    ArrayList<Reserva> ListaReservasFamiliar;
+    ArrayList<Reserva> ListaReservasInfantil;
 
     //* --- FUNCIONES DE LA CLASE ---
+
+    /**
+     * Carga los datos del fichero de gestion de reservas. 
+     */
+    private void loadData() {
+
+    }
+
+    /**
+     * Carga los datos del fichero de gestion de reservas.
+     */
+    private void saveData() {
+
+    }
 
     /**
      * Default constructor. 
     */
     public GestorReservas() {}
+
+    /**
+     * Parameters contrcutor.
+    */
+    public GestorReservas(Usuario user_, Reserva reserve_) {
+
+        // Limpia los arrays.
+        ListaReservasFamiliar.clear();
+        ListaReservasAdultos.clear();
+        ListaReservasInfantil.clear();
+
+        //todo - Load Data.
+    }
     
 
     public boolean hacerReservaIndividual(Usuario user, Pista PistaAReservar) {
-
         
         return true;
     }

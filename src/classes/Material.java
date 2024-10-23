@@ -3,7 +3,7 @@ package classes;
 public class Material {
     private Integer ID;
     private Tipo Tipo;
-    private boolean Uso;
+    private boolean Uso; // true - Usable, false - No usable
     private Estado Estado;
 
     public enum Tipo {

@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GestorPistas {
@@ -26,8 +27,6 @@ public class GestorPistas {
     private void loadData() {
 
         try {
-
-            ListaPistas.clear();
 
             Pista PistaCargada = null;
             ArrayList<Material> materialesTemp = new ArrayList<>();
@@ -84,11 +83,10 @@ public class GestorPistas {
                     System.err.println("[ERROR] No se han obtenido todos los campos al cargar las pistas.\n");
                     break;
                 }
+
             }
 
             reader.close();
-
-            System.out.println("[INFO] Se han cargado todas las pistas correctamente.\n");
 
         } catch (Exception e) {
             System.err.println("[ERROR] No se han podido cargar las pistas correctamente.\n");
@@ -96,10 +94,10 @@ public class GestorPistas {
         }
     }
 
-
     /**
      * Saves ArrayList data from 'pistas-list.txt'. Located in '/data'.
     */
+    @SuppressWarnings("ConvertToTryWithResources")
     private void saveData() {
         try {
             
@@ -135,7 +133,7 @@ public class GestorPistas {
 
             writer.close();
 
-            System.out.println("[INFO] Pistas guardadas correctamente.\n");
+            //System.out.println("[INFO] Pistas guardadas correctamente.\n");
 
         } catch (Exception e) {
 
@@ -144,6 +142,90 @@ public class GestorPistas {
         }
     }
 
+    /**
+     * Load ArrayList data from 'materials-list.txt'. Located in '/data'.
+     */
+    @SuppressWarnings({"CallToPrintStackTrace", "ConvertToTryWithResources"})
+    private void materialLoadData() {
+
+        try {
+
+            Material materialCargado;
+
+            String filename = "data/materials-list.txt";
+
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            String linea;
+
+            while ((linea = reader.readLine()) != null) {
+
+                //* LEE LA PRIMERA LINEA
+
+                String[] campos = linea.split(",");
+
+                if (campos.length == 4) {
+                    
+                    //* --- CARGA DE MATERIAL ---
+
+                    int IdMaterial = Integer.parseInt(campos[0]);
+                    Tipo TipoMaterial = Tipo.valueOf(campos[1]);
+                    boolean UsoMaterial = Boolean.parseBoolean(campos[2]);
+                    Estado EstadoMaterial = Estado.valueOf(campos[3]);
+
+                    // Crear la Pista con los materiales leídos
+                    materialCargado = new Material(IdMaterial, TipoMaterial, UsoMaterial, EstadoMaterial);
+
+                    ListaMateriales.add(materialCargado); // Se añade a la lista de materiales.
+
+                } else {
+                    System.err.println("[ERROR] No se han obtenido todos los campos al cargar las pistas.\n");
+                    break;
+                }
+            }
+
+            reader.close();
+
+            System.out.println("[INFO] Se han cargado todas las pistas correctamente.\n");
+
+        } catch (IOException | NumberFormatException e) {
+            System.err.println("[ERROR] No se han podido cargar las pistas correctamente.\n");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Saves ArrayList data from 'materials-list.txt'. Located in '/data'.
+    */
+    @SuppressWarnings({"ConvertToTryWithResources", "CallToPrintStackTrace"})
+    private void materialSaveData() {
+        try {
+            
+            String filename = "data/materials-list.txt";
+            
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename, false)); // false para sobreescribir el archivo
+
+            for (int i = 0; i < ListaMateriales.size(); i++) {
+
+
+                Material materialAGuardar = ListaMateriales.get(i);
+
+                // Linea de registro de usuario
+                String LineaAGuardar = materialAGuardar.getID() + "," + materialAGuardar.getTipo() + "," +
+                                        materialAGuardar.isUso() + "," + materialAGuardar.getEstado() + "\n";
+
+                writer.write(LineaAGuardar);  // Añadir el nuevo usuario en una nueva línea
+            }
+
+            writer.close();
+
+            //System.out.println("[INFO] Pistas guardadas correctamente.\n");
+
+        } catch (IOException e) {
+
+			System.err.println("[ERROR] No se han podido guardar las pistas.\n");
+            e.printStackTrace();
+        }
+    }
 
     //*  --- FUNCIONES DE LA CLASE PUBLICAS ---
 
@@ -151,10 +233,13 @@ public class GestorPistas {
     public GestorPistas() {
 
         ListaPistas = new ArrayList<>();
+        ListaMateriales = new ArrayList<>();
 
+        ListaMateriales.clear();
         ListaPistas.clear();
 
         loadData();
+        materialLoadData();
     }
 
     /**
@@ -167,18 +252,25 @@ public class GestorPistas {
      * @param Materiales
      * @return Pista creada.
     */
-    public Pista crearPista(String NombrePista, boolean EstadoPista, boolean TipoPista, TamanoPista Tam, int MaxJugadores) {
+    public boolean crearPista(String NombrePista, boolean EstadoPista, boolean TipoPista, TamanoPista Tam, int MaxJugadores) {
 
-        // Crea una nueva pista
-        Pista NuevaPista = new Pista(NombrePista, EstadoPista, TipoPista, Tam, MaxJugadores);
+        try {
+            // Crea una nueva pista
+            Pista NuevaPista = new Pista(NombrePista, EstadoPista, TipoPista, Tam, MaxJugadores);
 
-        // Anadir al listado
-        ListaPistas.add(NuevaPista);
+            // Anadir al listado
+            ListaPistas.add(NuevaPista);
 
-        // Guardar informacion
-        saveData();
+            // Guardar informacion
+            saveData();
 
-        return NuevaPista;
+            return true;
+
+        } catch (Exception e) {
+            e.getCause();
+        }
+
+        return false;
     }
 
     /**
@@ -190,7 +282,7 @@ public class GestorPistas {
     public boolean crearPista(Pista pista) {
 
         try {
-
+            
             ListaPistas.add(pista);
 
             saveData();
@@ -203,24 +295,48 @@ public class GestorPistas {
     }
 
     /**
-     * Crea un material.
+     * Crea un material. ID se genera automaticamente.
      * @param Id
      * @param Type
      * @param Uso
      * @param State
-     * @return Material Creado.
+     * @return true - Si lo creo.
+     * @return false- Si no lo creo.
     */
-    public Material crearMaterial(int Id, Tipo Type, boolean Uso, Estado State) {
+    public boolean crearMaterial(Tipo Type, boolean Uso, Estado State) {
 
-        Material NuevoMaterial = new Material(Id, Type, Uso, State);
+        try {
+            int Id = ListaMateriales.size(); // Ajuste de ID
 
-        return NuevoMaterial;
+            Material NuevoMaterial = new Material(Id,Type, Uso, State);
+
+            ListaMateriales.add(NuevoMaterial);
+
+            //System.out.println("[DEBUG] Material añadido: " + NuevoMaterial.toString());
+
+            materialSaveData();
+
+            return true;
+        } catch (Exception e) {
+            e.getCause();
+        }
+
+        return false;
     }
 
+    /**
+     * Crea un material guardandolo en la lista.
+     * @param material
+     * @return true - Si lo creo.
+     * @return false - Si no lo creo.
+     */
     public boolean crearMaterial(Material material) {
     
         try {
             
+            ListaMateriales.add(material);
+
+            materialSaveData();
 
             return true;
 
@@ -237,20 +353,22 @@ public class GestorPistas {
      * @return TRUE - Si se ha asociado correctamente.
      * @return FALSE - Si no se ha asociado.
     */
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean AsociarMaterialAPistaDisponible(Material MaterialToAssociate, Pista PistaToAssociate) {
 
         try {
             // .asociarMaterialAPista() contiene las condiciones de asociacion.
             if (PistaToAssociate.asociarMaterialAPista(MaterialToAssociate) == true) {
                 
-                System.out.println("[INFO] Se ha asociado el material a la pista correctamente.\n");
+                //System.out.println("[INFO] Se ha asociado el material a la pista correctamente.\n");
 
                 saveData();
+                materialSaveData();
 
                 return true;
             } else {
                 
-                System.out.println("[INFO] No se ha podido asociar el material a la pista indicada.\n");
+                //System.out.println("[INFO] No se ha podido asociar el material a la pista indicada.\n");
                 return false;
             }
 
@@ -265,11 +383,12 @@ public class GestorPistas {
     /**
      * Imprime la lista de las pistas no disponibles. 
     */
+    @SuppressWarnings("CallToPrintStackTrace")
     public void ListarPistasNoDisponibles() {
 
         try {
             int iterator = 1;
-            System.out.println("- LISTA DE PISTAS NO DISPONIBLES -\n");
+            //System.out.println("- LISTA DE PISTAS NO DISPONIBLES -\n");
             for (int i = 0; i < ListaPistas.size(); i++) {
                 
                 Pista aux = ListaPistas.get(i);
@@ -285,7 +404,7 @@ public class GestorPistas {
                 
             }
             
-            System.out.println("- FINAL DE LA LISTA -\n");
+            //System.out.println("- FINAL DE LA LISTA -\n");
 
         } catch (Exception e) {
             System.err.println("[ERROR] No se pudo listar las pistas no disponibles.\n");
@@ -299,11 +418,12 @@ public class GestorPistas {
      * @param NumJugadores
      * @param TipoPista TRUE = interior / FALSE = exterior.
     */
+    @SuppressWarnings("CallToPrintStackTrace")
     public void ListarPistasLibres(int NumJugadores, boolean TipoPista) {
 
         try {
             int iterator = 1;
-            System.out.println("- LISTA DE PISTAS LIBRES / con al menos " + NumJugadores + " jugadores -\n");
+            //System.out.println("\n- LISTA DE PISTAS LIBRES / con al menos " + NumJugadores + " jugadores -\n");
             for (int i=0; i < ListaPistas.size(); i++) {
                 
                 Pista aux = ListaPistas.get(i);
@@ -318,12 +438,66 @@ public class GestorPistas {
 
             }
             
-            System.out.println("- FINAL DE LA LISTA -\n");
+            //System.out.println("- FINAL DE LA LISTA -\n");
 
         } catch (Exception e) {
             System.err.println("[ERROR] No se pudo listar las pistas libres.\n");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Lista todas las pistas.
+     */
+    public void listarListaMateriales() {
+        
+        for (int i = 0; i < ListaMateriales.size(); i++) {
+            System.out.println(i+1 + ". " + ListaMateriales.get(i).toString());
+        }
+    }
+
+    /**
+     * Lista todos los materiales.
+     */
+    public void listarListaPistas() {
+        
+        for (int i = 0; i < ListaPistas.size(); i++) {
+            System.out.println(i+1 + ". " + ListaPistas.get(i).toString());
+        }
+    }
+
+    /**
+     * Obtiene una pista de la posicion indicada.
+     * @param pos - Posicion de la pista.
+     * @return La pista
+     * @return null - Si no existe la pista.
+     */
+    public Pista getPista(int pos) {
+
+        try {
+            return ListaPistas.get(pos);
+        } catch (Exception e) {
+            System.err.println("[ERROR] No existe la pista en la posicion " + pos + ".\n");
+        }
+
+        return null;
+    }
+
+    /**
+     * Obtiene un material de la posicion indicada.
+     * @param pos - Posicion de la lista de materiales.
+     * @return El material.
+     * @return null - Si no existe el material.
+     */
+    public Material getMaterial(int pos) {
+
+        try {
+            return ListaMateriales.get(pos);
+        } catch (Exception e) {
+            System.err.println("[ERROR] No existe el material en la posicion " + pos + ".\n");
+        }
+    
+        return null;
     }
 
 }

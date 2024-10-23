@@ -1,6 +1,9 @@
+import classes.Material;
+import classes.Material.Estado;
+import classes.Material.Tipo;
 import classes.Pista;
-import classes.Usuario;
 import classes.Pista.TamanoPista;
+import classes.Usuario;
 import gestors.*;
 import java.util.Scanner;
 public class App {
@@ -199,10 +202,11 @@ public class App {
             // Mostrar el menú
             System.out.println("--- GESTION DE PISTAS ---\n");
             System.out.println("1. Crear nueva pista");
-            System.out.println("2. crear nuevo material");
+            System.out.println("2. Crear nuevo material");
             System.out.println("3. Asociar material a pista");
-            System.out.println("4. Listar pistas libres");
-            System.out.println("5. Atras");
+            System.out.println("4. Listar pistas no disponibles");
+            System.out.println("5. Listar pistas libres");
+            System.out.println("6. Atras");
             System.out.print("\nSeleccione una opción: ");
             
             // Leer la opción del usuario
@@ -214,60 +218,168 @@ public class App {
                 // Crear pista.
                 case "1" -> {
                     
-                    clearScreen();
-                    System.out.println("\n- [CREAR NUEVA PISTA] -\n");
+                    try {
+                        clearScreen();
+                        System.out.println("\n- [CREAR NUEVA PISTA] -\n");
 
-                    // Obtener datos de la pista
-                    System.out.print("- Nombre de la pista: ");
-                    field1 = scanner.nextLine();
+                        // Obtener datos de la pista
+                        System.out.print("- Nombre de la pista: ");
+                        field1 = scanner.nextLine();
 
-                    System.out.print("- Tipo pista (Exterior[0]/Interior[1]): ");
-                    field2 = scanner.nextLine();
-                    boolean tipoPista = Integer.parseInt(field2) == 1;  // Convertir a booleano (1 = Interior, 0 = Exterior)
+                        System.out.print("- Tipo pista (Exterior[0]/Interior[1]): ");
+                        field2 = scanner.nextLine();
+                        boolean tipoPista = Integer.parseInt(field2) == 1;  // Convertir a booleano (1 = Interior, 0 = Exterior)
 
-                    System.out.print("- Tamaño de la pista (Minibasket[0]/Adultos[1]/3vs3[2]): ");
-                    field3 = scanner.nextLine();
-                    TamanoPista tamanoPista = switch (field3) {  // Convertir a enum
-                        case "0" -> TamanoPista.MINIBASKET;
-                        case "1" -> TamanoPista.ADULTOS;
-                        case "2" -> TamanoPista.TRES_VS_TRES;
-                        default -> throw new IllegalArgumentException("Tamaño de pista no válido");
-                    };
+                        System.out.print("- Tamaño de la pista (Minibasket[0]/Adultos[1]/3vs3[2]): ");
+                        field3 = scanner.nextLine();
+                        TamanoPista tamanoPista = switch (field3) {  // Convertir a enum
+                            case "0" -> TamanoPista.MINIBASKET;
+                            case "1" -> TamanoPista.ADULTOS;
+                            case "2" -> TamanoPista.TRES_VS_TRES;
+                            default -> throw new IllegalArgumentException("Tamaño de pista no válido");
+                        };
 
-                    System.out.print("- Número máximo de jugadores: ");
-                    field4 = scanner.nextLine();
-                    int maxJugadores = Integer.parseInt(field4);  // Convertir a entero
+                        System.out.print("- Número máximo de jugadores: ");
+                        field4 = scanner.nextLine();
+                        int maxJugadores = Integer.parseInt(field4);  // Convertir a entero
 
-                    // Crear la nueva pista con los valores obtenidos
-                    Pista pista = new Pista(field1, true, tipoPista, tamanoPista, maxJugadores);
+                        // Crear la nueva pista con los valores obtenidos
+                        Pista pista = new Pista(field1, true, tipoPista, tamanoPista, maxJugadores);
 
-                    // Aquí podrías añadir la pista a algún gestor de pistas o a una lista.
-                    gestorPistas.
-
-                    System.out.println("\n+ Pista creada exitosamente.");
-                    pause();  // Pausar para que el usuario pueda ver el mensaje      Integer.parseInt(field3), Integer.parseInt(field4));
+                        // Aquí podrías añadir la pista a algún gestor de pistas o a una lista.
+                        if (gestorPistas.crearPista(pista)) {
+                            System.out.println("\n+ Pista creada exitosamente.\n");
+                            pause();  // Pausar para que el usuario pueda ver el mensaje
+                        } else {
+                            System.out.println("\n+ Error al crear la pista.\n");
+                            pause();  // Pausar para que el usuario pueda ver el mensaje
+                        }
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("+ Error en obtencion de informacion\n");
+                        sleep(1);
+                    }
 
                 }
 
                 // Crear Material.
                 case "2" -> {
                     
-                    
+                    clearScreen();
+                    System.out.println("\n- [CREAR NUEVO MATERIAL] -\n");
+
+                    System.out.print("- Tipo de material (Pelota[0]/Canasta[1]/Cono[2]): ");
+                    field1 = scanner.nextLine();
+                    Tipo tipoMaterial = switch (field1) {  // Convertir a enum
+                        case "0" -> Tipo.PELOTA;
+                        case "1" -> Tipo.CANASTA;
+                        case "2" -> Tipo.CONO;
+                        default -> throw new IllegalArgumentException("Tamaño de pista no válido");
+                    };
+
+                    System.out.print("- Uso del material (No usable[0]/usable[1]): ");
+                    field2 = scanner.nextLine();
+                    boolean usoMaterial = Boolean.parseBoolean(field2);
+
+                    System.out.print("- Estado del material (Disponible[0]/Reservado[1]/Malo[2]): ");
+                    field3 = scanner.nextLine();
+                    Estado estadoMaterial = switch (field3) {  // Convertir a enum
+                        case "0" -> Estado.DISPONIBLE;
+                        case "1" -> Estado.RESERVADO;
+                        case "2" -> Estado.MALO;
+                        default -> throw new IllegalArgumentException("Tamaño de pista no válido");
+                    };
+
+                    if (gestorPistas.crearMaterial(tipoMaterial, usoMaterial, estadoMaterial)) {
+                        System.out.println("\n+ Material creado exitosamente.\n");
+                        pause();  // Pausar para que el usuario pueda ver el mensaje
+                    } else {
+                        System.out.println("\n+ Error al crear el material.\n");
+                        pause();  // Pausar para que el usuario pueda ver el mensaje
+                    }
+
                 }
 
                 // Asociar Material a pista.
                 case "3" -> {
 
-                    
+                    System.out.println("\n- [ESCOGE LA PISTA] -\n");
+
+                    gestorPistas.listarListaPistas();
+                    field1 = scanner.nextLine();
+                    int posPista = Integer.parseInt(field1);
+
+
+                    System.out.println("\n- [ESCOGE EL MATERIAL A ASOCIAR] -\n");
+
+                    gestorPistas.listarListaMateriales();
+                    field1 = scanner.nextLine();
+                    int posMaterial = Integer.parseInt(field1);
+
+                    // Obtenemos los materiales y la pista
+
+                    Pista pistaObtenida = gestorPistas.getPista(posPista-1);
+                    Material materialObtenido = gestorPistas.getMaterial(posMaterial-1);
+
+                    // Comprobamos que exista la pista.
+                    if (pistaObtenida != null) {
+                        
+                        // Comprobamos que exista el material.
+                        if (materialObtenido != null) {
+
+                            if (gestorPistas.AsociarMaterialAPistaDisponible(materialObtenido, pistaObtenida)) {
+                                System.out.println("\n+ Se ha asociado el material a la pista correctamente.\n");
+                                pause();
+                            } else {
+                                System.out.println("\n+ No se ha podido asociar el material con la pista indicada.\n");
+                                pause();
+                            }
+
+                        } else {
+                            System.err.println("[ERROR] Material " + posMaterial + " no localizable");
+                            sleep(3);
+                        }
+
+                    } else {
+                        System.err.println("[ERROR] Pista " + posPista + " no localizable");
+                        sleep(3);
+                    }
+
                 }
                 
-                // Listar pistas libres.
+                // Listar pistas no disponible.
                 case "4" -> {
+
+                    System.out.println("\n- [LISTA DE PISTAS NO DISPONIBLES] -\n");
+
+                    gestorPistas.ListarPistasNoDisponibles();
+
+                    pause();
+
+                }
+
+                // Listar pistas libres.
+                case "5" -> {
                     
+                    clearScreen();
+                    System.out.println("\n- [LISTAR PISTAS DISPONIBLES] -\n");
+
+                    System.out.print("- Tipo pista (Exterior[0]/Interior[1]): ");
+                    field1 = scanner.nextLine();
+                    boolean tipoPista = Integer.parseInt(field1) == 1;  // Convertir a booleano (1 = Interior, 0 = Exterior)
+
+                    System.out.print("- Número minimo de jugadores: ");
+                    field2 = scanner.nextLine();
+                    int maxJugadores = Integer.parseInt(field2);
+                    
+                    System.out.println("\n- [LISTA DE PISTAS DISPONIBLES] -\n");
+
+                    gestorPistas.ListarPistasLibres(maxJugadores, tipoPista);
+                    
+                    pause();
                 }
 
                 // Atras.
-                case "5" -> {
+                case "6" -> {
                     running = false; // Terminar el bucle
                 }
 
@@ -280,10 +392,6 @@ public class App {
         }
 
         //return;
-
-
-
-
     }
 
 

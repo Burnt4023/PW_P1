@@ -93,6 +93,7 @@ public abstract class Reserva {
 
         // Método abstracto toString(), para que cada subclase sobreescriba el método y que
         // así se muestre información específica de cada tipo de reserva.
+        @Override
         public abstract String toString();
 
     }

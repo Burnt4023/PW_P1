@@ -1,12 +1,5 @@
-Pista General,true,true,ADULTOS,5
-0,PELOTA,false,DISPONIBLE
-1,CANASTA,false,DISPONIBLE
+Pista1,true,true,MINIBASKET,6
 %
-Pista Dedicada,false,true,ADULTOS,5
-%
-Pista General,true,true,ADULTOS,5
-0,PELOTA,false,DISPONIBLE
-1,CANASTA,false,DISPONIBLE
-%
-Pista Dedicada,false,true,ADULTOS,5
+Pista2,true,false,ADULTOS,10
+3,CONO,false,DISPONIBLE
 %
