@@ -44,8 +44,7 @@ public class App {
 
                 // Reservas.
                 case "2" -> {
-                    System.out.println("Has seleccionado Gestión de Reservas.");
-                    pause(); // Pausa para que el usuario vea el mensaje
+                    subMenuPistas(scanner, gestorPistas);
                 }
 
                 // Pistas.
@@ -429,7 +428,19 @@ public class App {
                 // Hacer reserva.
                 case "1" -> {
 
-                    System.out.println("Introduce una linea de caracteres: "); // Mostrar mensajes.
+                    //todo - Pedir informacion de la reserva
+
+                    System.out.println("DNI del usuario que realiza la reserva: "); // Mostrar mensajes.
+                    
+                    //todo - Buscar en los usuario si existe el DNI
+
+                    System.out.println("Duracion de la reserva (60/90/120 min): "); // Mostrar mensajes.
+
+                    System.out.println("Indique la pista a reservar: "); // Mostrar mensajes.
+
+                    
+
+
                     field1 = scanner.nextLine(); // Obtener datos del buffer de entrada.
                     int ejemplo = Integer.parseInt(field1); // Conversion de String a Integer.
 
@@ -438,29 +449,36 @@ public class App {
                 // Hacer reserva con bono.
                 case "2" -> {
                     
+                    //todo - Pedir informacion de la reserva
 
                 }
 
                 // Modificar reserva.
                 case "3" -> {
 
+                    //todo - Pedir que reserva se quiere modificar.
 
                 }
                 
                 // Eliminar reserva.
                 case "4" -> {
 
+                    t//todo - Pedir que reserva se quiere eliminar.
 
                 }
 
                 // Listar reservas futuras.
                 case "5" -> {
                     
+                    //todo - Listar reservas futuras.
+
                 }
 
                 // Listar reservas en dia determinado.
                 case "6" -> {
                     
+                    //todo - Listar reservas en dia determinado.
+
                 }
 
                 // Atras.

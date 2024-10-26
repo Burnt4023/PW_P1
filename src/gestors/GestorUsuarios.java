@@ -199,7 +199,27 @@ public class GestorUsuarios extends Usuario{
             System.err.println("[ERROR] Error al imprimir la lista de usuarios.\n");
         }
     }
- 
+
+    /**
+     * @brief Busca un usuario por su DNI.
+     * @param Dni - DNI del usuario a buscar.
+     * @return TRUE - Si se ha encontrado el usuario.
+     * @return FALSE - Si no se ha encontrado el usuario.
+     */
+    public boolean searchUser(String Dni) {
+    
+        for (int i=0; i < usuarios.size(); i++) {
+            
+            Usuario aux = usuarios.get(i);
+
+            if (Dni.equals(aux.getDni())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * @brief Modifica los datos del usuario, buscandolo por su Dni.
      * @param Dni_ El Dni del usuario.
