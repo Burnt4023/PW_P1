@@ -35,8 +35,15 @@ public class ReservaAdultos extends Reserva {
     //Método toString
     @Override
     public String toString(){
-        String Text = "IdUsuario: " + getIdUsuario() + ", Fecha: " + getFecha() + ", Duracion: " + getDuracion() + ", Precio: " + getPrecio() + ", Descuento: " + getDescuento() + ", Nº de Adultos: " + getNumeroAdultos();
-        return Text;
+        if(getEsBono() == false)    // Si EsBono es false, imprimo todos los campos menos los de bono.
+        {
+            String Text = "IdUsuario: " + getIdUsuario() + ", Fecha: " + getFecha() + ", Duracion: " + getDuracion() + ", Precio: " + getPrecio() + ", Descuento: " + getDescuento() + ", Es Bono: " + getEsBono() + ", Nº de Adultos: " + getNumeroAdultos();
+            return Text;
+        }
+        else{
+            String Text = "IdUsuario: " + getIdUsuario() + ", Fecha: " + getFecha() + ", Duracion: " + getDuracion() + ", Precio: " + getPrecio() + ", Descuento: " + getDescuento() +"Es Bono: " + getEsBono() + ", Id del Bono: " + getIdBono() + ", Numero de Sesión: " + getNumeroSesion() + ", Nº de Adultos: " + getNumeroAdultos();
+            return Text;
+        }
     }
 
 }

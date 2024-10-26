@@ -28,7 +28,8 @@ public class ReservaFamiliar extends Reserva {
         NumeroAdultos_ = NumeroAdultos;
     }
 
-    // Constructor de una instancia de ReservaFamiliar
+
+    // Constructor de una instancia de ReservaFamiliar Normal (sin bono).
     public ReservaFamiliar(Usuario usuario, Pista pista, int NumeroNinos, int NumeroAdultos) {
         super();
 
@@ -52,12 +53,22 @@ public class ReservaFamiliar extends Reserva {
         NumeroAdultos_ = NumeroAdultos;
     }
 
+
     //Método toString
     @Override
     public String toString(){
-        String Text = "IdUsuario: " + getIdUsuario() + ", Fecha: " + getFecha() + ", Duracion: " + getDuracion() + ", Precio: " + getPrecio() + ", Descuento: " + getDescuento() + ", Nº de Niños: " + getNumeroNinos() + ", Nº de Adultos: " + getNumeroAdultos();
-        return Text;
+        if(getEsBono() == false)    // Si EsBono es false, imprimo todos los campos menos los de bono.
+        {
+            String Text = "IdUsuario: " + getIdUsuario() + ", Fecha: " + getFecha() + ", Duracion: " + getDuracion() + ", Precio: " + getPrecio() + ", Descuento: " + getDescuento() + ", Es Bono: " + getEsBono() + ", Nº de Niños: " + getNumeroNinos() + ", Nº de Adultos: " + getNumeroAdultos();
+            return Text;
+        }
+        else{
+            String Text = "IdUsuario: " + getIdUsuario() + ", Fecha: " + getFecha() + ", Duracion: " + getDuracion() + ", Precio: " + getPrecio() + ", Descuento: " + getDescuento() +"Es Bono: " + getEsBono() + ", Id del Bono: " + getIdBono() + ", Numero de Sesión: " + getNumeroSesion() + ", Nº de Niños: " + getNumeroNinos() + ", Nº de Adultos: " + getNumeroAdultos();
+            return Text;
+        }
     }
+
+
 }
 
 

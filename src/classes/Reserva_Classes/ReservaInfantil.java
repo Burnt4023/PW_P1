@@ -20,9 +20,10 @@ public class ReservaInfantil extends Reserva {
    public void setNumeroNinos(int NumeroNinos) {
         NumeroNinos_ = NumeroNinos;
    }
+   
 
-    // Constructor de una instancia de ReservaInfantil
-    public ReservaInfantil(Usuario usuario, Pista pista, int NumeroNinos) {
+    // Constructor de una instancia de ReservaInfantil Normal (sin bono).
+    public ReservaInfantil(Usuario usuario, Pista pista, int NumeroNinos, int NumeroAdultos) {
         
         super(); // Llamada al constructor vacío de la superclase (Reserva).
 
@@ -31,7 +32,7 @@ public class ReservaInfantil extends Reserva {
             throw new IllegalArgumentException("Solo los adultos pueden realizar una reserva infantil.");
         }
 
-        if( pista.getTamanoPista() != TamanoPista.MINIBASKET )
+        if( pista.getTamanoPista() != TamanoPista.MINIBASKET )  //otra condición que se debe cumplir.
         {
             throw new IllegalArgumentException("Solo se puede reservar MINIBASKET en una ReservaInfantil.");
         }
@@ -40,20 +41,26 @@ public class ReservaInfantil extends Reserva {
     }
 
 
+
     // @Override se utiliza para sobrescribir métodos de una clase padre.
     // Esto permite cambiar el comportamiento de un método heredado en una subclase.
-
-    // No es posible sobrescribir (override) constructores ni atributos, pero sí invocar
-    // constructores del padre, con super(), y "ocultar" atributos...
 
 
     // Método toString
     @Override
     public String toString(){
-        String Text = "IdUsuario: " + getIdUsuario() + ", Fecha: " + getFecha() + ", Duracion: " + getDuracion() + ", Precio: " + getPrecio() + ", Descuento: " + getDescuento() + ", Nº de niños: " + getNumeroNinos();
-        return Text;
-    }
+        if(getEsBono() == false)    // Si EsBono es false, imprimo todos los campos menos los de bono.
+        {
+            String Text = "IdUsuario: " + getIdUsuario() + ", Fecha: " + getFecha() + ", Duracion: " + getDuracion() + ", Precio: " + getPrecio() + ", Descuento: " + getDescuento()  + ", Es Bono: " + getEsBono() + ", Nº de niños: " + getNumeroNinos();
+            return Text;
+        }
+        else{
+            String Text = "IdUsuario: " + getIdUsuario() + ", Fecha: " + getFecha() + ", Duracion: " + getDuracion() + ", Precio: " + getPrecio() + ", Descuento: " + getDescuento() + ", Es Bono: " + getEsBono() + ", Id del Bono: " + getIdBono() + ", Numero de Sesión: " + getNumeroSesion() + ", Nº de Niños: " + getNumeroNinos();
+            return Text;
+        }
 
+    }
+    
 }
 
 
