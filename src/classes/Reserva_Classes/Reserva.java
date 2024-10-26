@@ -2,6 +2,11 @@ package classes.Reserva_Classes;
 
 import java.util.Date;
 
+// Para gestión de archivos
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 
 public abstract class Reserva {
@@ -110,6 +115,26 @@ public abstract class Reserva {
             this.NumeroSesion_ = NumeroSesion;
         }
 
+
+        // Método para guardar la reserva en un archivo
+        public void guardarEnArchivo() {
+            String filePath = "data/reservas-list.txt"; // Ruta al archivo
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) { // 'true' para añadir al final del archivo
+                // Formato de la reserva en texto
+                String ReservaData = String.format(
+                    "%s,%s,%d,%s,%.2f,%.2f,%b,%s,%d",
+                    IdUsuario_, Fecha_, Duracion_, Precio_, Descuento_,
+                    EsBono_, IdBono_ != null ? IdBono_ : "N/A", NumeroSesion_
+                );
+
+                writer.write(ReservaData);
+                writer.newLine();
+                writer.write("%"); // Separador entre reservas
+                writer.newLine();
+            } catch (IOException e) {
+                System.err.println("Error al escribir en el archivo: " + e.getMessage());
+            }
+        }
 
 
         // Método abstracto toString(). Así cada subclase podrá sobreescribir el método

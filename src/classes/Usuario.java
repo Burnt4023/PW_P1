@@ -104,6 +104,17 @@ public class Usuario{
     }
 
     /**
+     * Getter de Usuario a partir del IdUsuario.
+     * @ return instancia Usuario a partir de IdUsuario.
+     */
+//    public Usuario getUserString(String IdUsuario) {
+
+//       
+
+//        return();
+//    }
+
+    /**
      * Convierte un String en un Date.
      * @param String2Convert String que se convertirá.
      * @return El Date del string anterior.
