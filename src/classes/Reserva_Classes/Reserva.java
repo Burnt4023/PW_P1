@@ -12,8 +12,10 @@ public abstract class Reserva {
         private float Precio_;  // En euros.
         private boolean Descuento_;
 
-        private String IdBono_; // Usado si se aplica bono
-        private int NumeroSesion_; // Usado si se aplica bono
+        // Usado si se aplica bono
+        private boolean EsBono_;
+        private String IdBono_;
+        private int NumeroSesion_;
 
 
         //Constructor vacío (sin parámetros)
@@ -28,14 +30,15 @@ public abstract class Reserva {
             Descuento_ = Descuento;
         }
 
-        //Constructor clase Reserva (con Bono)
-        public Reserva(String IdUsuario, Date Fecha, int Duracion, float Precio, boolean Descuento, String IdBono, int NumeroSesion) {
+        //Constructor clase Reserva con Bono
+        public Reserva(String IdUsuario, Date Fecha, int Duracion, float Precio, boolean Descuento, boolean EsBono, String IdBono, int NumeroSesion) {
             IdUsuario_ = IdUsuario;
             Fecha_ = Fecha;
             Duracion_ = Duracion;
             Precio_ = Precio;
             Descuento_ = Descuento;
 
+            EsBono_ = EsBono;
             IdBono_ = IdBono;
             NumeroSesion_ = NumeroSesion;
         }
@@ -59,6 +62,10 @@ public abstract class Reserva {
 
         public boolean getDescuento() {
             return Descuento_;
+        }
+
+        public boolean getEsBono() {
+            return EsBono_;
         }
 
         public String getIdBono() {
@@ -91,14 +98,29 @@ public abstract class Reserva {
             this.Descuento_ = Descuento;
         }
 
-        // Método abstracto toString(), para que cada subclase sobreescriba el método y que
-        // así se muestre información específica de cada tipo de reserva.
+        public void setEsBono(boolean EsBono) {
+            this.EsBono_ = EsBono;
+        }
+
+        public void setIdBono(String IdBono) {
+            this.IdBono_ = IdBono;
+        }
+
+        public void setNumeroSesion(int NumeroSesion)  {
+            this.NumeroSesion_ = NumeroSesion;
+        }
+
+
+
+        // Método abstracto toString(). Así cada subclase podrá sobreescribir el método
+        // y que así se muestre información específica de cada tipo de reserva.
         @Override
         public abstract String toString();
 
     }
 
 
+    
 
 /**
     >>> El Patrón "Factory" es un patrón de diseño que se utiliza para delegar la creación
