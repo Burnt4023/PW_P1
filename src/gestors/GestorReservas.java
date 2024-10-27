@@ -279,6 +279,7 @@ public class GestorReservas {
         return -1;
     }
 
+    
     /**
      * Comprueba si una pista puede modificarse. Una pista puede ser modificada 24h antes de que empiece.
      * @param PistaConcreta
