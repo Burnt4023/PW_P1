@@ -37,7 +37,7 @@ public class Bono {
      * Constructor con parametros completos.
     */
     public Bono(String IdBono2, TamanoPista TipoDeSesion_,
-                Usuario DniUsuarioAsociado_, int UsosRestantes_, Date AltaDelBono_, boolean Caducado_) {
+                String DniUsuarioAsociado_, int UsosRestantes_, Date AltaDelBono_, boolean Caducado_) {
 
         IdBono = IdBono2;
         TipoDeSesion = TipoDeSesion_;
