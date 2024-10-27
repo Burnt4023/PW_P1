@@ -3,9 +3,13 @@ package classes.Reserva_Classes;
 import java.util.Date;
 
 
-
 public abstract class Reserva {
 
+    public enum TipoReserva {
+        ADULTOS,
+        FAMILIAR,
+        INFANTIL;
+    }
 
         private String IdUsuario_;  // Usuario que realiza la reserva.
         private Date Fecha_;

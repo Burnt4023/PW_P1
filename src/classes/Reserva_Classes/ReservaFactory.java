@@ -7,12 +7,6 @@ import classes.Usuario;
 
 //* ----- Clase ReservaFactory
 public class ReservaFactory {
-    
-    public enum TipoReserva {
-        ADULTOS,
-        FAMILIAR,
-        INFANTIL;
-    }
 
     // Método para crear una reserva normal
     public static Reserva crearReserva(String TipoReserva, Usuario Usuario, Pista Pista, int NumeroNinos, int NumeroAdultos)
