@@ -4,6 +4,8 @@ import classes.*;
 import classes.Pista.TamanoPista;
 import classes.Reserva_Classes.Reserva;
 import classes.Reserva_Classes.Reserva.TipoReserva;
+import classes.Reserva_Classes.ReservaFactory;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -172,25 +174,83 @@ public class GestorReservas {
     }
 
 
-    public boolean hacerReservaIndividual(TipoReserva tipoReserva, String DniUsuario, Pista PistaAReservar, int Minutos, int precio) {
+    public boolean hacerReservaIndividual(TipoReserva tipoReserva, Usuario Usuario, Pista PistaAReservar, int Minutos, int precio) {
         
         if (tipoReserva == TipoReserva.ADULTOS) {
+            // Se crea una instancia de reserva     //new Date() es la fecha y hora actuales
+            // calcularDescuento(dniUsuario) Método que calcule el descuento según la antigüedad         
+            Reserva reserva = ReservaFactory.crearReserva(tipoReserva, Usuario, PistaAReservar, 0, 5);                           // otra opcion Reserva reserva = ReservaFactory.crearReserva(tipoReserva, dniUsuario, new Date(), duracion, pistaAReservar.getId(), precio, calcularDescuento(dniUsuario) );
 
-           
+            if (reserva == null) {
+                // Lógica para agregar la reserva a la base de datos o al sistema de reservas
+                // ... 
+                return true;
+            }
+
 
         } else if (tipoReserva == TipoReserva.FAMILIAR) {
 
-        } else if (tipoReserva == TipoReserva.INFANTIL) {
+            Reserva reserva = ReservaFactory.crearReserva(tipoReserva, Usuario, PistaAReservar, 0, 5);
 
+            if (reserva == null) {
+                // Lógica para agregar la reserva a la base de datos o al sistema de reservas
+                // ... 
+                return true;
+            }
+
+
+        } else if (tipoReserva == TipoReserva.INFANTIL) {
+            Reserva reserva = ReservaFactory.crearReserva(tipoReserva, Usuario, PistaAReservar, 0, 5);
+
+            if (reserva == null) {
+                // Lógica para agregar la reserva a la base de datos o al sistema de reservas
+                // ... 
+                return true;
+            }
         }
 
         return false;
     }
 
-    public boolean hacerReservaConBono(Bono BonoUsuario, Usuario user, Pista PistaAReservar) {
 
-        return true;
+    public boolean hacerReservaConBono(TipoReserva tipoReserva, Usuario Usuario, Pista PistaAReservar, int Minutos, int precio, Bono BonoUsuario, Usuario user) {
+
+        if (tipoReserva == TipoReserva.ADULTOS) {
+        // Se crea una instancia de reserva con bono
+       
+        Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario);
+
+        if (reserva == null) {
+            // Lógica para agregar la reserva a la base de datos o al sistema de reservas
+            // ... 
+            return true;
+        }
+
+
+        } else if (tipoReserva == TipoReserva.FAMILIAR) {
+
+            Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario);
+
+            if (reserva == null) {
+                // Lógica para agregar la reserva a la base de datos o al sistema de reservas
+                // ... 
+                return true;
+            }
+
+            
+        } else if (tipoReserva == TipoReserva.INFANTIL) {
+            Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario);
+
+            if (reserva == null) {
+                // Lógica para agregar la reserva a la base de datos o al sistema de reservas
+                // ... 
+                return true;
+            }
+        }
+
+        return false;
     }
+
 
     /**
      * Obtiene el precio de las horas de una reserva.

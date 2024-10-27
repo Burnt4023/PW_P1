@@ -9,19 +9,19 @@ import classes.Usuario;
 public class ReservaFactory {
 
     // Método para crear una reserva normal
-    public static Reserva crearReserva(String TipoReserva, Usuario Usuario, Pista Pista, int NumeroNinos, int NumeroAdultos)
+    public static Reserva crearReserva(Reserva.TipoReserva TipoReserva, Usuario Usuario, Pista Pista, int NumeroNinos, int NumeroAdultos)
     {
         switch (TipoReserva) // Según el tipo de reserva deseado, se instanciará una subclase u otra.
         {
-            case "Infantil":
+            case INFANTIL:
                 // Se instancia una clase de tipo ReservaInfantil
                 return new ReservaInfantil(Usuario, Pista, NumeroNinos, NumeroAdultos);
 
-            case "Familiar":
+            case FAMILIAR:
                 // Se instancia una clase de tipo ReservaFamiliar
                 return new ReservaFamiliar(Usuario, Pista, NumeroNinos, NumeroAdultos);
 
-            case "Adultos":
+            case ADULTOS:
                 // Se instancia una clase de tipo ReservaAdultos
                 return new ReservaAdultos(Usuario);
                     
@@ -32,19 +32,19 @@ public class ReservaFactory {
 
 
     // Método para crear una reserva de bono
-    public static Reserva crearReservaBono(String TipoReserva, Usuario Usuario, Pista Pista, int NumeroNinos, int NumeroAdultos, Boolean EsBono, String IdBono, int NumeroSesion) {
+    public static Reserva crearReservaBono(Reserva.TipoReserva TipoReserva, Usuario Usuario, Pista Pista, int NumeroNinos, int NumeroAdultos, Boolean EsBono, String IdBono, int NumeroSesion) {
         Reserva reserva;
 
         switch (TipoReserva) {
-            case "Infantil":
+            case INFANTIL:
                 reserva = new ReservaInfantil(Usuario, Pista, NumeroNinos, NumeroAdultos);
                 break;
                 
-            case "Familiar":
+            case FAMILIAR:
                 reserva = new ReservaFamiliar(Usuario, Pista, NumeroNinos, NumeroAdultos);
                 break;
                 
-            case "Adultos":
+            case ADULTOS:
                 reserva = new ReservaAdultos(Usuario);
                 break;
                 
