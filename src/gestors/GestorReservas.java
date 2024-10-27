@@ -12,6 +12,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;   // manejo de horas
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 /**
  * Clase del gestor de las reservas. 
@@ -282,37 +285,105 @@ public class GestorReservas {
      * @return true - Si la pista puede ser modificada.
      * @return false - Si la pista no puede ser modificada.
     */
-    protected boolean checkIfPistaCanBeModified(Pista PistaConcreta) {
+    protected boolean checkIfPistaCanBeModified(Pista PistaConcreta, Reserva Reserva) {
 
-        return true;
+        // Obtener la fecha y hora actuales
+        Date fechaActual = new Date();
+
+        // Obtener la fecha de la reserva
+        Date fechaReserva = Reserva.getFecha(); // Asegúrate de que `getFecha()` retorne un `Date`
+
+        // Calcular la diferencia en milisegundos
+        long diferenciaEnMilisegundos = fechaReserva.getTime() - fechaActual.getTime();
+
+        // Convertir la diferencia a horas
+        long diferenciaEnHoras = TimeUnit.MILLISECONDS.toHours(diferenciaEnMilisegundos);
+
+        // Verificar si faltan menos de 24 horas
+        if (diferenciaEnHoras < 24) {
+            return false; // No se puede modificar la reserva
+        }
+
+        return true; // Se puede modificar la reserva
     }
 
+
     /**
-     * To comment. 
-    */
+     * Muestra todas las reservas futuras realizadas por el usuario.
+     * Este método filtra y muestra aquellas reservas cuya fecha es posterior a la fecha actual.
+     * No toma parámetros y, generalmente, se esperaría que muestre las reservas en un formato amigable para el usuario.
+     */
     public void verReservasFuturas() {
 
+        Date fechaActual = new Date();  //se crea una instancia de Date para obtener la fecha y hora actual. Esto se usará para filtrar las reservas futuras.
+    
+        for (Reserva reserva : ListaReservas) {
+            if (reserva.getFecha().after(fechaActual)) {  // Comprobar si la fecha es futura
+                System.out.println(reserva);  // Ahora imprime la reserva directamente
+            }
+        }
 
     }
 
+
     /**
-     * To comment. 
-    */
+     * Muestra las reservas realizadas para una fecha específica.
+     * @param day La fecha de la reserva que se desea ver.
+     */
     public void verReserva(Date day) {
 
+        for (Reserva reserva : ListaReservas) {
+            if (esMismaFecha(reserva.getFecha(), day)) {  // Comparamos solo el día
+                System.out.println(reserva);  // Se usa el método toString de la clase Reserva
+            }
+        }
+        
     }
 
+
+   /**
+     * Compara si dos fechas son iguales, ignorando la hora.
+     * @param fecha1 Primera fecha a comparar.
+     * @param fecha2 Segunda fecha a comparar.
+     * @return true si ambas fechas son el mismo día, false en caso contrario.
+     */
+    private boolean esMismaFecha(Date fecha1, Date fecha2) {
+        // Convierte ambas fechas a LocalDate
+        LocalDate localDate1 = fecha1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate localDate2 = fecha2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        // Compara las fechas sin considerar la hora
+        return localDate1.isEqual(localDate2);
+    }
+
+
     /**
-     * To comment. 
-    */
+     * Muestra las reservas asociadas a una pista específica.
+     * @param PistaConcreta La pista de la cual se desean ver las reservas.
+     * Este método ayuda a verificar la disponibilidad de una pista concreta en función de las reservas existentes.
+     */
     public void verreserva(Pista PistaConcreta) {
 
+        for (Reserva reserva : ListaReservas) {
+            if (reserva.getTipoReserva().equals(PistaConcreta)) {  // Verificar si la pista coincide
+                System.out.println(reserva);  // Llama a toString
+            }
+        }
     }
 
-    /**
-     * To comment. 
-    */
+
+/**
+     * Muestra las reservas realizadas para una fecha y pista específicas.
+     * @param day La fecha de la reserva.
+     * @param PistaConcreta La pista para la cual se desea ver la reserva.
+     */
     public void verReserva(Date day, Pista PistaConcreta) {
 
+        for (Reserva reserva : ListaReservas) {
+            if (esMismaFecha(reserva.getFecha(), day) && reserva.getTipoReserva().equals(PistaConcreta)) {  // Verificar ambos criterios
+                System.out.println(reserva);  // Usa el método toString
+            }
+        }
     }
+
 }

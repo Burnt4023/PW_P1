@@ -22,6 +22,8 @@ public abstract class Reserva {
         private int IdBono_;
         private int NumeroSesion_;
 
+        private TipoReserva TipoReserva_; // Campo privado para el tipo de reserva
+
         //private Bono Bono_;
 
 
@@ -116,6 +118,17 @@ public abstract class Reserva {
         public void setNumeroSesion(int NumeroSesion)  {
             this.NumeroSesion_ = NumeroSesion;
         }
+
+        // Getter para tipoReserva
+        public TipoReserva getTipoReserva() {
+            return TipoReserva_;
+        }
+
+        // Setter para tipoReserva
+        public void setTipoReserva(TipoReserva tipoReserva) {
+            this.TipoReserva_ = tipoReserva;
+        }
+
 
         // Método abstracto toString(). Así cada subclase podrá sobreescribir el método
         // y que así se muestre información específica de cada tipo de reserva.
