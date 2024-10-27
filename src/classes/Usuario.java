@@ -104,17 +104,6 @@ public class Usuario{
     }
 
     /**
-     * Getter de FechaInscripcion String.
-     * @return FechaInscripcion con formato "dd/MM/yyyy".
-     */
-    static public String getStringFormatedFecha(Date fecha) {
-
-        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.FRANCE);
-
-        return df.format(fecha);
-    }
-
-    /**
      * Getter de Usuario a partir del IdUsuario.
      * @ return instancia Usuario a partir de IdUsuario.
      */

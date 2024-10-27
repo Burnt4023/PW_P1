@@ -1,20 +1,22 @@
 package gestors;
 
 import classes.*;
+import classes.Usuario.getStringFormatedFecha;
 import classes.Pista.TamanoPista;
 import classes.Reserva_Classes.Reserva;
 import classes.Reserva_Classes.Reserva.TipoReserva;
 import classes.Reserva_Classes.ReservaFactory;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;   // manejo de horas
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;   // manejo de horas
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Clase del gestor de las reservas. 
@@ -45,7 +47,7 @@ public class GestorReservas {
 
                 // Linea de registro de usuario
                 String nuevoBono = bono.getIdBono() + "," + bono.getTipoDeSesion() + "," + bono.getDniUsuarioAsociado() + "," +
-                                    bono.getUsosRestantes() + "," + bono.getAltaDelBono() + "," +
+                                    bono.getUsosRestantes() + "," + getStringFormatedFecha(bono.getAltaDelBono()) + "," +
                                     bono.isCaducado() + "\n";
 
                 writer.write(nuevoBono);  // Añadir el nuevo usuario en una nueva línea
@@ -80,17 +82,18 @@ public class GestorReservas {
                 String[] campos = linea.split(",");
 
                 // Verificar que la línea tiene los campos necesarios
-                if (campos.length == 7) {
+                if (campos.length == 6) {
                     int IdBono  = Integer.parseInt(campos[0]);
                     Pista.TamanoPista TipoDeSesion = Pista.TamanoPista.valueOf(campos[1]);
                     String DniUsuario = campos[2];
                     int UsosRestantes = Integer.parseInt(campos[3]);
-                    Date AltaDelBono = Usuario.convertString2Date(campos[5]);
-                    boolean Caducado = Boolean.parseBoolean(campos[4]);
-                    int NumeroSesion = Integer.parseInt(campos[6]);
+                    Date AltaDelBono = Usuario.convertString2Date(campos[4]);
+                    boolean Caducado = Boolean.parseBoolean(campos[5]);
 
                     // Creamos el bono guardado
-                    Bono bono = new Bono(IdBono, TipoDeSesion, DniUsuario, UsosRestantes, AltaDelBono, Caducado, NumeroSesion);
+                    Bono bono = new Bono(IdBono, TipoDeSesion, DniUsuario, UsosRestantes, AltaDelBono, Caducado);
+
+                    System.out.println("[DEBUG]: Cargado bono " + bono.toString());
 
                     // Anadir al vector
                     ListaBonos.add(bono);
@@ -108,7 +111,7 @@ public class GestorReservas {
 
         } catch (Exception e) {
             
-            System.err.println("[ERROR] No se han podido cargar los usuarios correctamente.\n");
+            System.err.println("[ERROR] No se han podido cargar los bonos correctamente.\n");
             e.printStackTrace();
         }
     }
@@ -177,6 +180,16 @@ public class GestorReservas {
         }
     }
 
+    /**
+     * Getter de FechaInscripcion String.
+     * @return FechaInscripcion con formato "dd/MM/yyyy".
+     */
+    static public String getStringFormatedFecha(Date fecha) {
+
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.FRANCE);
+
+        return df.format(fecha);
+    }
 
 
     public boolean hacerReservaIndividual(TipoReserva tipoReserva, Usuario Usuario, Pista PistaAReservar, int Minutos, int precio) {
@@ -224,7 +237,7 @@ public class GestorReservas {
         if (tipoReserva == TipoReserva.ADULTOS) {
         // Se crea una instancia de reserva con bono
        
-        Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario.getIdBono(), BonoUsuario.getNumeroSesion());
+        Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario.getIdBono(), 5 - BonoUsuario.getUsosRestantes());
 
         if (reserva == null) {
             // Lógica para agregar la reserva a la base de datos o al sistema de reservas
@@ -235,7 +248,7 @@ public class GestorReservas {
 
         } else if (tipoReserva == TipoReserva.FAMILIAR) {
 
-            Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario.getIdBono(), BonoUsuario.getNumeroSesion());
+            Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario.getIdBono(), 5 - BonoUsuario.getUsosRestantes());
 
             if (reserva == null) {
                 // Lógica para agregar la reserva a la base de datos o al sistema de reservas
@@ -245,7 +258,7 @@ public class GestorReservas {
 
             
         } else if (tipoReserva == TipoReserva.INFANTIL) {
-            Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario.getIdBono(), BonoUsuario.getNumeroSesion());
+            Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario.getIdBono(), 5 - BonoUsuario.getUsosRestantes());
 
             if (reserva == null) {
                 // Lógica para agregar la reserva a la base de datos o al sistema de reservas
