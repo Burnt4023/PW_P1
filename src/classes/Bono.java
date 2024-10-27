@@ -36,6 +36,22 @@ public class Bono {
     }
 
     /**
+     * Guardar el bono en el archivo 'bonos-list.txt', situado en '/data'.
+     */
+    public void saveData() {
+        
+
+
+    }
+
+    /**
+     * Cargar el bono desde el archivo 'bonos-list.txt', situado en '/data'.
+     */
+    public void loadData() {
+
+    }
+
+    /**
      * Comprueba que el bono no tenga un año o mas, ya que estaria caducado.
      */
     private void comprobarCaducidad() {

@@ -41,4 +41,8 @@ public class Configuration {
     public static String getMaterialsFilePath() {
         return getProperty("materials_file");
     }
+
+    public static String getreservasFilePath() {
+        return getProperty("reservas_file");
+    }
 }
