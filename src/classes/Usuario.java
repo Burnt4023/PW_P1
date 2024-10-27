@@ -104,6 +104,17 @@ public class Usuario{
     }
 
     /**
+     * Getter de FechaInscripcion String.
+     * @return FechaInscripcion con formato "dd/MM/yyyy".
+     */
+    static public String getStringFormatedFecha(Date fecha) {
+
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.FRANCE);
+
+        return df.format(fecha);
+    }
+
+    /**
      * Getter de Usuario a partir del IdUsuario.
      * @ return instancia Usuario a partir de IdUsuario.
      */
@@ -121,7 +132,7 @@ public class Usuario{
      * @throws ParseException
      * @warning El formato utilizado es "dd/MM/yyyy".
      */
-    public Date convertString2Date(final String String2Convert) throws ParseException{
+    static public Date convertString2Date(final String String2Convert) throws ParseException{
 
         // Nos llega DD/MM/YYYY
         DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.FRANCE);

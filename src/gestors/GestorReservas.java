@@ -1,17 +1,15 @@
 package gestors;
 
 import classes.*;
+import classes.Pista.TamanoPista;
 import classes.Reserva_Classes.Reserva;
 import classes.Reserva_Classes.Reserva.TipoReserva;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import classes.Reserva_Classes.ReservaFactory;
 
 /**
  * Clase del gestor de las reservas. 
@@ -38,12 +36,10 @@ public class GestorReservas {
 
             for (int i = 0; i < ListaBonos.size(); i++) {
 
-                
-                
                 Bono bono = ListaBonos.get(i);
 
                 // Linea de registro de usuario
-                String nuevoBono = bono.getIdBono() + "," + bono.getTipoDeSesion() + "," + bono.getUsuarioAsociado().getDni() + "," +
+                String nuevoBono = bono.getIdBono() + "," + bono.getTipoDeSesion() + "," + bono.getDniUsuarioAsociado() + "," +
                                     bono.getUsosRestantes() + "," + bono.getAltaDelBono() + "," +
                                     bono.isCaducado() + "\n";
 
@@ -80,15 +76,15 @@ public class GestorReservas {
 
                 // Verificar que la línea tiene los campos necesarios
                 if (campos.length == 6) {
-                    String IdBono  = campos[0];
+                    int IdBono  = Integer.parseInt(campos[0]);
                     Pista.TamanoPista TipoDeSesion = Pista.TamanoPista.valueOf(campos[1]);
                     String DniUsuario = campos[2];
                     int UsosRestantes = Integer.parseInt(campos[3]);
-                    Date AltaDelBono = convertString2Date(campos[4]);
-                    boolean Caducado = Boolean.parseBoolean(campos[5]);
+                    Date AltaDelBono = Usuario.convertString2Date(campos[5]);
+                    boolean Caducado = Boolean.parseBoolean(campos[4]);
 
-                    // Creamos el usuario guardado
-                    Bono bono = new Bono(IdBono, TipoDeSesion, new Usuario(DniUsuario), UsosRestantes, AltaDelBono, Caducado);
+                    // Creamos el bono guardado
+                    Bono bono = new Bono(IdBono, TipoDeSesion, DniUsuario, UsosRestantes, AltaDelBono, Caducado);
 
                     // Anadir al vector
                     ListaBonos.add(bono);
@@ -102,7 +98,7 @@ public class GestorReservas {
 
             reader.close();
 
-            System.out.println("[INFO] Se han cargado todos los usuarios correctamente.\n");
+            //System.out.println("[INFO] Se han cargado todos los usuarios correctamente.\n");
 
         } catch (Exception e) {
             
@@ -128,12 +124,7 @@ public class GestorReservas {
     /**
      * Default constructor. 
     */
-    public GestorReservas() {}
-
-    /**
-     * Parameters contrcutor.
-    */
-    public GestorReservas(Usuario user_, Reserva reserve_) {
+    public GestorReservas() {
 
         ListaReservas = new ArrayList<>();
         ListaBonos = new ArrayList<>();
@@ -143,14 +134,49 @@ public class GestorReservas {
         ListaBonos.clear();
 
         //todo - Load Data.
+        loadBonoData();
     }
     
+
+    /**
+     * Crea un bono.
+     */
+    public boolean makeNuevoBono(String DniUsuario, TamanoPista tamPista) {
+
+        try {
+
+            Bono nuevoBono = new Bono(ListaBonos.size(), tamPista, DniUsuario);
+
+            ListaBonos.add(nuevoBono);
+
+            saveBonoData();
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Lista todos los bonos.
+     */
+    public void listarBonos() {
+
+        for (int i = 0; i < ListaBonos.size(); i++) {
+
+            Bono aux = ListaBonos.get(i);
+
+            System.out.println(i+1 + ". UsuarioAsociado: " + aux.getDniUsuarioAsociado() + ", TipoBono: " + aux.getTipoDeSesion() + ", UsosRestantes: " + aux.getUsosRestantes() + ", Caducado: " + aux.isCaducado() + ", AltaDelBono: " + aux.getAltaDelBono() + "\n");
+        }
+    }
+
 
     public boolean hacerReservaIndividual(TipoReserva tipoReserva, String DniUsuario, Pista PistaAReservar, int Minutos, int precio) {
         
         if (tipoReserva == TipoReserva.ADULTOS) {
 
-            Reserva reserva = ReservaFactory.crearReserva(tipoReserva.toString(), new Usuario(DniUsuario), PistaAReservar, Minutos, 0, false, false, null, 0);W
+           
 
         } else if (tipoReserva == TipoReserva.FAMILIAR) {
 

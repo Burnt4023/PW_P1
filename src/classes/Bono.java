@@ -7,7 +7,7 @@ public class Bono {
 
     // Variables de la clase.
 
-    String IdBono; // Identificador del bono.
+    int IdBono; // Identificador del bono.
     TamanoPista TipoDeSesion; // Especifica que tipo de bono es.
     String DniUsuarioAsociado;
     int UsosRestantes;
@@ -22,7 +22,7 @@ public class Bono {
     /**
      * Constructor con parametros. 
     */
-    public Bono(String IdBono2, TamanoPista TipoDeSesion_,
+    public Bono(int IdBono2, TamanoPista TipoDeSesion_,
                 String DniUsuarioAsociado_) {
 
         IdBono = IdBono2;
@@ -36,7 +36,7 @@ public class Bono {
     /**
      * Constructor con parametros completos.
     */
-    public Bono(String IdBono2, TamanoPista TipoDeSesion_,
+    public Bono(int IdBono2, TamanoPista TipoDeSesion_,
                 String DniUsuarioAsociado_, int UsosRestantes_, Date AltaDelBono_, boolean Caducado_) {
 
         IdBono = IdBono2;
@@ -89,11 +89,11 @@ public class Bono {
         return true;
     }
 
-    public String getIdBono() {
+    public int getIdBono() {
         return IdBono;
     }
 
-    public void setIdBono(String idBono) {
+    public void setIdBono(int idBono) {
         this.IdBono = idBono;
     }
 

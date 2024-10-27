@@ -3,7 +3,6 @@ import classes.Material.Estado;
 import classes.Material.Tipo;
 import classes.Pista;
 import classes.Pista.TamanoPista;
-import classes.Reserva_Classes.Reserva.TipoReserva;
 import classes.Usuario;
 import gestors.*;
 import java.util.Scanner;
@@ -417,7 +416,9 @@ public class App {
             System.out.println("4. Eliminar reserva");
             System.out.println("5. Listar reservas futuras");
             System.out.println("6. Listar reservas en un dia determinado");
-            System.out.println("7. Atras");
+            System.out.println("7. Crear bono");
+            System.out.println("8. Listar bonos");
+            System.out.println("9. Atras");
             System.out.print("\nSeleccione una opción: ");
             
             // Leer la opción del usuario
@@ -430,15 +431,6 @@ public class App {
                 case "1" -> {
 
                     System.out.print("\n- [HACER RESERVA INDIVIDUAL] -\n");
-
-                    System.out.print("- Tipo de reserva(Adultos[0]/Familiar[1]/Infantil[2]): ");
-                    field4 = scanner.nextLine();
-                    TipoReserva tipoReserva = switch (field4) {  // Convertir a enum
-                        case "0" -> TipoReserva.ADULTOS;
-                        case "1" -> TipoReserva.FAMILIAR;
-                        case "2" -> TipoReserva.INFANTIL;
-                        default -> throw new IllegalArgumentException("+ Tipo de reserva no válido");
-                    };
 
                     System.out.print("\n- DNI del usuario que realiza la reserva: ");
                     field1 = scanner.nextLine();
@@ -465,8 +457,6 @@ public class App {
                         }
 
                         int PrecioReserva = gestorReservas.getPrecioReserva(duracionReserva);
-
-                        
 
                         gestorPistas.listarListaPistas();
                         System.out.print("\n- Indique el nombre (exacto) la pista a reservar: "); // Mostrar mensajes.
@@ -530,8 +520,54 @@ public class App {
 
                 }
 
-                // Atras.
+                // Crear bono.
                 case "7" -> {
+
+                    System.out.print("\n- [CREACION BONO] -\n");
+
+                    System.out.print("\n- DNI del usuario al que se asocia el bono: ");
+                    field1 = scanner.nextLine();
+
+                    if (gestorUsuarios.searchUser(field1) == false) {
+                        System.out.println("\n+ No se ha podido encontrar el usuario con el DNI " + field1 + ".\n");
+                        pause();
+                    } else {
+                        
+                        System.out.println("\n+ El usuario con el DNI " + field1 + " sera el que haga la reserva.\n");
+
+                        System.out.print("- Tipo de bono (Minibasket[0]/Adultos[1]/3vs3[2]): ");
+                        field3 = scanner.nextLine();
+                        TamanoPista TipoBono = switch (field3) {  // Convertir a enum
+                            case "0" -> TamanoPista.MINIBASKET;
+                            case "1" -> TamanoPista.ADULTOS;
+                            case "2" -> TamanoPista.TRES_VS_TRES;
+                            default -> throw new IllegalArgumentException("Tamaño de pista no válido");
+                        };
+
+                        if (gestorReservas.makeNuevoBono(field1, TipoBono) == true) {
+                            System.out.println("\n+ Se ha creado el bono correctamente.\n");
+                            pause();
+                        } else {
+                            System.out.println("\n+ No se ha podido crear el bono.\n");
+                            pause();
+                        }
+
+                    }
+
+                }
+
+                // Listrar bonos.
+                case "8" -> {
+                    
+                    System.out.print("\n- [LISTA DE BONOS] -\n");
+
+                    gestorReservas.listarBonos();
+
+                    pause();
+                }
+
+                // Atras.
+                case "9" -> {
                     running = false; // Terminar el bucle
                 }
 
