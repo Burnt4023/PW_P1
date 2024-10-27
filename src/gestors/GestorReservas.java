@@ -68,7 +68,7 @@ public class GestorReservas {
      * @return -1 Si las cantidad de minutos no es la esperada.
      * @warning Las cantidades de minutos aceptadas son: 60, 90 y 120.
      */
-    protected int getPrecioReserva(int minutes) {
+    public int getPrecioReserva(int minutes) {
 
         if (minutes == 60) {
             return 20;

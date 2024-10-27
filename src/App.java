@@ -1,4 +1,5 @@
 import classes.Material;
+import classes.Reserva_Classes.*;
 import classes.Material.Estado;
 import classes.Material.Tipo;
 import classes.Pista;
@@ -430,6 +431,15 @@ public class App {
 
                     System.out.print("\n- [HACER RESERVA INDIVIDUAL] -\n");
 
+                    System.out.print("- Tipo de reserva(Adultos[0]/Familiar[1]/Infantil[2]): ");
+                    field4 = scanner.nextLine();
+                    TipoReserva tipoReserva = switch (field4) {  // Convertir a enum
+                        case "0" -> TipoReserva.ADULTOS;
+                        case "1" -> Tiporeserva.FAMILIAR;
+                        case "2" -> TipoReserva.INFANTIL;
+                        default -> throw new IllegalArgumentException("Tamaño de pista no válido");
+                    };
+
                     System.out.print("\n- DNI del usuario que realiza la reserva: ");
                     field1 = scanner.nextLine();
 
@@ -453,6 +463,8 @@ public class App {
                         } else if (duracionReserva != 90) {
                             duracionReserva = 90;
                         }
+
+                        int PrecioReserva = gestorReservas.getPrecioReserva(duracionReserva);
 
                         gestorPistas.listarListaPistas();
                         System.out.print("\n- Indique el nombre (exacto) la pista a reservar: "); // Mostrar mensajes.

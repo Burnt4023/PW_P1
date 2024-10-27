@@ -6,6 +6,7 @@ import java.util.Date;
 
 public abstract class Reserva {
 
+
         private String IdUsuario_;  // Usuario que realiza la reserva.
         private Date Fecha_;
         private int Duracion_;  // En minutos.
