@@ -1,7 +1,7 @@
 package classes.Reserva_Classes;
 
 import java.util.Date;
-
+//import classes.Bono;
 
 public abstract class Reserva {
 
@@ -19,8 +19,10 @@ public abstract class Reserva {
 
         // Usado si se aplica bono
         private boolean EsBono_;
-        private String IdBono_;
+        private int IdBono_;
         private int NumeroSesion_;
+
+        //private Bono Bono_;
 
 
         //Constructor vacío (sin parámetros)
@@ -36,7 +38,7 @@ public abstract class Reserva {
         }
 
         //Constructor clase Reserva con Bono
-        public Reserva(String IdUsuario, Date Fecha, int Duracion, float Precio, boolean Descuento, boolean EsBono, String IdBono, int NumeroSesion) {
+        public Reserva(String IdUsuario, Date Fecha, int Duracion, float Precio, boolean Descuento, boolean EsBono, int IdBono, int NumeroSesion) {
             IdUsuario_ = IdUsuario;
             Fecha_ = Fecha;
             Duracion_ = Duracion;
@@ -73,7 +75,7 @@ public abstract class Reserva {
             return EsBono_;
         }
 
-        public String getIdBono() {
+        public int getIdBono() {
             return IdBono_;
         }
 
@@ -107,7 +109,7 @@ public abstract class Reserva {
             this.EsBono_ = EsBono;
         }
 
-        public void setIdBono(String IdBono) {
+        public void setIdBono(int IdBono) {
             this.IdBono_ = IdBono;
         }
 

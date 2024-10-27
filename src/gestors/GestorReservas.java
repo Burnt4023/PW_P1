@@ -77,16 +77,17 @@ public class GestorReservas {
                 String[] campos = linea.split(",");
 
                 // Verificar que la línea tiene los campos necesarios
-                if (campos.length == 6) {
+                if (campos.length == 7) {
                     int IdBono  = Integer.parseInt(campos[0]);
                     Pista.TamanoPista TipoDeSesion = Pista.TamanoPista.valueOf(campos[1]);
                     String DniUsuario = campos[2];
                     int UsosRestantes = Integer.parseInt(campos[3]);
                     Date AltaDelBono = Usuario.convertString2Date(campos[5]);
                     boolean Caducado = Boolean.parseBoolean(campos[4]);
+                    int NumeroSesion = Integer.parseInt(campos[6]);
 
                     // Creamos el bono guardado
-                    Bono bono = new Bono(IdBono, TipoDeSesion, DniUsuario, UsosRestantes, AltaDelBono, Caducado);
+                    Bono bono = new Bono(IdBono, TipoDeSesion, DniUsuario, UsosRestantes, AltaDelBono, Caducado, NumeroSesion);
 
                     // Anadir al vector
                     ListaBonos.add(bono);
@@ -174,12 +175,13 @@ public class GestorReservas {
     }
 
 
+
     public boolean hacerReservaIndividual(TipoReserva tipoReserva, Usuario Usuario, Pista PistaAReservar, int Minutos, int precio) {
         
         if (tipoReserva == TipoReserva.ADULTOS) {
             // Se crea una instancia de reserva     //new Date() es la fecha y hora actuales
             // calcularDescuento(dniUsuario) Método que calcule el descuento según la antigüedad         
-            Reserva reserva = ReservaFactory.crearReserva(tipoReserva, Usuario, PistaAReservar, 0, 5);                           // otra opcion Reserva reserva = ReservaFactory.crearReserva(tipoReserva, dniUsuario, new Date(), duracion, pistaAReservar.getId(), precio, calcularDescuento(dniUsuario) );
+            Reserva reserva = ReservaFactory.crearReserva(tipoReserva, Usuario, PistaAReservar, 0, 5);
 
             if (reserva == null) {
                 // Lógica para agregar la reserva a la base de datos o al sistema de reservas
@@ -213,12 +215,13 @@ public class GestorReservas {
     }
 
 
+
     public boolean hacerReservaConBono(TipoReserva tipoReserva, Usuario Usuario, Pista PistaAReservar, int Minutos, int precio, Bono BonoUsuario, Usuario user) {
 
         if (tipoReserva == TipoReserva.ADULTOS) {
         // Se crea una instancia de reserva con bono
        
-        Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario);
+        Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario.getIdBono(), BonoUsuario.getNumeroSesion());
 
         if (reserva == null) {
             // Lógica para agregar la reserva a la base de datos o al sistema de reservas
@@ -229,7 +232,7 @@ public class GestorReservas {
 
         } else if (tipoReserva == TipoReserva.FAMILIAR) {
 
-            Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario);
+            Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario.getIdBono(), BonoUsuario.getNumeroSesion());
 
             if (reserva == null) {
                 // Lógica para agregar la reserva a la base de datos o al sistema de reservas
@@ -239,7 +242,7 @@ public class GestorReservas {
 
             
         } else if (tipoReserva == TipoReserva.INFANTIL) {
-            Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario);
+            Reserva reserva = ReservaFactory.crearReservaBono(tipoReserva, Usuario, PistaAReservar, 0, 5, true, BonoUsuario.getIdBono(), BonoUsuario.getNumeroSesion());
 
             if (reserva == null) {
                 // Lógica para agregar la reserva a la base de datos o al sistema de reservas
@@ -250,6 +253,7 @@ public class GestorReservas {
 
         return false;
     }
+
 
 
     /**

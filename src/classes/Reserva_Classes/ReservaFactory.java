@@ -32,7 +32,7 @@ public class ReservaFactory {
 
 
     // Método para crear una reserva de bono
-    public static Reserva crearReservaBono(Reserva.TipoReserva TipoReserva, Usuario Usuario, Pista Pista, int NumeroNinos, int NumeroAdultos, Boolean EsBono, String IdBono, int NumeroSesion) {
+    public static Reserva crearReservaBono(Reserva.TipoReserva TipoReserva, Usuario Usuario, Pista Pista, int NumeroNinos, int NumeroAdultos, Boolean EsBono, int IdBono, int NumeroSesion) {
         Reserva reserva;
 
         switch (TipoReserva) {
