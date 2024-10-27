@@ -11,7 +11,7 @@ public class ReservaFamiliar extends Reserva {
     private int NumeroNinos_;
     private int NumeroAdultos_; 
 
-
+    
     //Getters
     public int getNumeroNinos(){
         return NumeroNinos_;

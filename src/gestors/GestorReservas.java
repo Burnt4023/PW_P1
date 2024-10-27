@@ -365,7 +365,7 @@ public class GestorReservas {
     public void verreserva(Pista PistaConcreta) {
 
         for (Reserva reserva : ListaReservas) {
-            if (reserva.getTipoReserva().equals(PistaConcreta)) {  // Verificar si la pista coincide
+            if (reserva.getPista().equals(PistaConcreta)) {  // Verificar si la pista coincide
                 System.out.println(reserva);  // Llama a toString
             }
         }
@@ -380,7 +380,7 @@ public class GestorReservas {
     public void verReserva(Date day, Pista PistaConcreta) {
 
         for (Reserva reserva : ListaReservas) {
-            if (esMismaFecha(reserva.getFecha(), day) && reserva.getTipoReserva().equals(PistaConcreta)) {  // Verificar ambos criterios
+            if (esMismaFecha(reserva.getFecha(), day) && reserva.getPista().equals(PistaConcreta)) {  // Verificar ambos criterios
                 System.out.println(reserva);  // Usa el método toString
             }
         }

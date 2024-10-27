@@ -3,6 +3,8 @@ package classes.Reserva_Classes;
 import java.util.Date;
 //import classes.Bono;
 
+import classes.Pista;
+
 public abstract class Reserva {
 
     public enum TipoReserva {
@@ -23,6 +25,7 @@ public abstract class Reserva {
         private int NumeroSesion_;
 
         private TipoReserva TipoReserva_; // Campo privado para el tipo de reserva
+        private Pista Pista_; // Campo para almacenar la pista asociada
 
         //private Bono Bono_;
 
@@ -127,6 +130,16 @@ public abstract class Reserva {
         // Setter para tipoReserva
         public void setTipoReserva(TipoReserva tipoReserva) {
             this.TipoReserva_ = tipoReserva;
+        }
+
+        // Getter para Pista_;
+        public Pista getPista() {
+            return Pista_;
+        }
+
+        // Setter para Pista_;
+        public void setPista(Pista pista) {
+            Pista_ = pista;
         }
 
 
