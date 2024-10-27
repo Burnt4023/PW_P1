@@ -1,0 +1,5 @@
+data_directory=data/
+materials_file=data/materials-list.txt
+pistas_file=data/pistas-list.txt
+reservas_file=data/reservas-list.txt
+usuarios_file=data/usuarios-list.txt

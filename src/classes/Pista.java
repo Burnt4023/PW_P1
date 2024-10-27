@@ -115,14 +115,12 @@ public class Pista {
      */
     @Override
     public String toString() {
-        return "Pista{" +
-                "nombrePista='" + nombrePista + '\'' +
-                ", estadoPista=" + (estadoPista ? "Disponible" : "No disponible") +
-                ", tipoPista=" + (tipoPista ? "Interior" : "Exterior") +
-                ", tamanoPista=" + tamanoPista +
-                ", maxJugadores=" + maxJugadores +
-                ", num materiales=" + materiales.size() +
-                '}';
+        return  "Nombre: '" + nombrePista + '\'' +
+                ", Estado: " + (estadoPista ? "Disponible" : "No disponible") +
+                ", Tipo: " + (tipoPista ? "Interior" : "Exterior") +
+                ", Tamano: " + tamanoPista +
+                ", MaxJugadores: " + maxJugadores +
+                ", NumMateriales: " + materiales.size();
     }
 
     // Método consultarMaterialesDisponibles

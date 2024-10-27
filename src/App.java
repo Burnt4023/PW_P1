@@ -44,7 +44,7 @@ public class App {
 
                 // Reservas.
                 case "2" -> {
-                    subMenuPistas(scanner, gestorPistas);
+                    subMenuReservas(scanner, gestorReservas, gestorUsuarios, gestorPistas);
                 }
 
                 // Pistas.
@@ -398,7 +398,7 @@ public class App {
      * @param scanner - Scanner heredado del menu principal.
      * @param gestorReservas - El gestor de reservas.
      */
-    private static void subMenuReservas(Scanner scanner, GestorReservas gestorReservas) {
+    private static void subMenuReservas(Scanner scanner, GestorReservas gestorReservas, GestorUsuarios gestorUsuarios, GestorPistas gestorPistas) {
 
         boolean running = true;
         String field1, field2, field3, field4, field5; // Utilizar para obtener variables por linea de comandos.
@@ -428,21 +428,54 @@ public class App {
                 // Hacer reserva.
                 case "1" -> {
 
-                    //todo - Pedir informacion de la reserva
+                    System.out.print("\n- [HACER RESERVA INDIVIDUAL] -\n");
 
-                    System.out.println("DNI del usuario que realiza la reserva: "); // Mostrar mensajes.
-                    
-                    //todo - Buscar en los usuario si existe el DNI
+                    System.out.print("\n- DNI del usuario que realiza la reserva: ");
+                    field1 = scanner.nextLine();
 
-                    System.out.println("Duracion de la reserva (60/90/120 min): "); // Mostrar mensajes.
+                    if (gestorUsuarios.searchUser(field1) == false) {
+                        System.out.println("\n+ No se ha podido encontrar el usuario con el DNI " + field1 + ".\n");
+                        pause();
+                    } else {
+                        
+                        System.out.println("\n+ El usuario con el DNI " + field1 + " sera el que haga la reserva.\n");
 
-                    System.out.println("Indique la pista a reservar: "); // Mostrar mensajes.
+                        // Obtener datos de la reserva.
+                        System.out.print("\n- Duracion de la reserva (60/90/120 min): "); // Mostrar mensajes.
+                        field2 = scanner.nextLine();
+                        int duracionReserva = Integer.parseInt(field2);
 
-                    
+                        // Gestionar limites.
+                        if (duracionReserva <= 60) {
+                            duracionReserva = 60;
+                        } else if (duracionReserva >= 120) {
+                            duracionReserva = 120;
+                        } else if (duracionReserva != 90) {
+                            duracionReserva = 90;
+                        }
 
+                        gestorPistas.listarListaPistas();
+                        System.out.print("\n- Indique el nombre (exacto) la pista a reservar: "); // Mostrar mensajes.
+                        field3 = scanner.nextLine();
+                        int posicionPista = Integer.parseInt(field3);
+                        
+                        Pista PistaAReservar = gestorPistas.getPista(posicionPista-1);
 
-                    field1 = scanner.nextLine(); // Obtener datos del buffer de entrada.
-                    int ejemplo = Integer.parseInt(field1); // Conversion de String a Integer.
+                        if (PistaAReservar == null) {
+                            System.out.println("\n+ No se ha podido encontrar la pista con el nombre " + field3 + ".\n");
+                            pause();
+                        
+                        } else {
+
+                            System.out.println("\n+ Se ha podido encontrar la pista con el nombre " + field3 + ".\n");
+
+                            // TODO - CREAR RESERVA
+
+                            // gestorReservas.reservaIndividual(Pista, DNIUsuario, Duracion);
+
+                        }
+
+                    }
 
                 }
 
@@ -463,7 +496,7 @@ public class App {
                 // Eliminar reserva.
                 case "4" -> {
 
-                    t//todo - Pedir que reserva se quiere eliminar.
+                    //todo - Pedir que reserva se quiere eliminar.
 
                 }
 
