@@ -559,7 +559,7 @@ public class App {
                 // Listrar bonos.
                 case "8" -> {
                     
-                    System.out.print("\n- [LISTA DE BONOS] -\n");
+                    System.out.println("\n- [LISTA DE BONOS] -\n");
 
                     gestorReservas.listarBonos();
 

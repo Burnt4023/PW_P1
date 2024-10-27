@@ -13,8 +13,6 @@ public class Bono {
     int UsosRestantes;
     Date AltaDelBono; // Fecha que el bono se dio de alta.
     boolean Caducado;
-    int NumeroSesion;
-
 
     /**
      * Default constructor. 
@@ -39,7 +37,7 @@ public class Bono {
      * Constructor con parametros completos.
     */
     public Bono(int IdBono2, TamanoPista TipoDeSesion_,
-                String DniUsuarioAsociado_, int UsosRestantes_, Date AltaDelBono_, boolean Caducado_, int NumeroSesion_) {
+                String DniUsuarioAsociado_, int UsosRestantes_, Date AltaDelBono_, boolean Caducado_) {
 
         IdBono = IdBono2;
         TipoDeSesion = TipoDeSesion_;
@@ -47,7 +45,6 @@ public class Bono {
         UsosRestantes = UsosRestantes_;
         AltaDelBono = AltaDelBono_; // Fecha actual
         Caducado = Caducado_;
-        NumeroSesion = NumeroSesion_;
     }
 
     /**
@@ -143,14 +140,6 @@ public class Bono {
 
     public void setCaducado(boolean caducado) {
         this.Caducado = caducado;
-    }
-    
-    public int getNumeroSesion(){
-        return NumeroSesion;
-    }
-
-    public void setNumeroSesion(int NumeroSesion_){
-        this.NumeroSesion = NumeroSesion_;
     }
 
 }
