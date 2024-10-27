@@ -1,6 +1,10 @@
 package classes;
 
 import classes.Pista.TamanoPista;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Bono {
@@ -13,8 +17,9 @@ public class Bono {
     int UsosRestantes;
     Date AltaDelBono; // Fecha que el bono se dio de alta.
     boolean Caducado;
-
+    
     // Funciones de la clase.
+    ArrayList<Bono> ListaBonos;
 
     /**
      * Default constructor. 
@@ -38,17 +43,42 @@ public class Bono {
     /**
      * Guardar el bono en el archivo 'bonos-list.txt', situado en '/data'.
      */
-    public void saveData() {
-        
+        private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+    // Método para guardar los datos del bono al final del archivo.
+    private void saveData() {
+        try {
+            String ListaBonos = "data/bonos-list.txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(ListaBonos, true)); // true para añadir al final del archivo
+            
+            // Convierte los datos del bono a una línea de texto en formato CSV
+            String lineaBono = String.format("%s, %s, %s, %d, %s, %b%n",
+                    IdBono,
+                    TipoDeSesion.toString(), // Asegúrate de que TamanoPista tenga un método toString adecuado
+                    UsuarioAsociado.getNombre(), // Suponiendo que Usuario tiene un método getNombreUsuario()
+                    UsosRestantes,
+                    dateFormat.format(AltaDelBono), // Convierte la fecha a un formato de texto
+                    Caducado
+            );
 
+            // Escribe la línea en el archivo
+            writer.write(lineaBono);
+            writer.close();
+            
+            System.out.println("[INFO] Bono guardado exitosamente en el archivo.");
+
+        } catch (Exception e) {
+            System.err.println("[ERROR] No se han podido guardar los bonos.\n");
+            e.printStackTrace();
+        }
     }
+
 
     /**
      * Cargar el bono desde el archivo 'bonos-list.txt', situado en '/data'.
      */
-    public void loadData() {
-
+    private void loadData() {
+        
     }
 
     /**
