@@ -1,10 +1,6 @@
 package classes;
 
 import classes.Pista.TamanoPista;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Bono {
@@ -13,13 +9,10 @@ public class Bono {
 
     String IdBono; // Identificador del bono.
     TamanoPista TipoDeSesion; // Especifica que tipo de bono es.
-    Usuario UsuarioAsociado;
+    String DniUsuarioAsociado;
     int UsosRestantes;
     Date AltaDelBono; // Fecha que el bono se dio de alta.
     boolean Caducado;
-    
-    // Funciones de la clase.
-    ArrayList<Bono> ListaBonos;
 
     /**
      * Default constructor. 
@@ -30,55 +23,28 @@ public class Bono {
      * Constructor con parametros. 
     */
     public Bono(String IdBono2, TamanoPista TipoDeSesion_,
-                Usuario UsuarioAsociado_) {
+                String DniUsuarioAsociado_) {
 
         IdBono = IdBono2;
         TipoDeSesion = TipoDeSesion_;
-        UsuarioAsociado = UsuarioAsociado_;
+        DniUsuarioAsociado = DniUsuarioAsociado_;
         UsosRestantes = 5; // 5 Usos por bono.
         AltaDelBono = new Date(); // Fecha actual
         Caducado = false;
     }
 
     /**
-     * Guardar el bono en el archivo 'bonos-list.txt', situado en '/data'.
-     */
-        private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+     * Constructor con parametros completos.
+    */
+    public Bono(String IdBono2, TamanoPista TipoDeSesion_,
+                Usuario DniUsuarioAsociado_, int UsosRestantes_, Date AltaDelBono_, boolean Caducado_) {
 
-    // Método para guardar los datos del bono al final del archivo.
-    private void saveData() {
-        try {
-            String ListaBonos = "data/bonos-list.txt";
-            BufferedWriter writer = new BufferedWriter(new FileWriter(ListaBonos, true)); // true para añadir al final del archivo
-            
-            // Convierte los datos del bono a una línea de texto en formato CSV
-            String lineaBono = String.format("%s, %s, %s, %d, %s, %b%n",
-                    IdBono,
-                    TipoDeSesion.toString(), // Asegúrate de que TamanoPista tenga un método toString adecuado
-                    UsuarioAsociado.getNombre(), // Suponiendo que Usuario tiene un método getNombreUsuario()
-                    UsosRestantes,
-                    dateFormat.format(AltaDelBono), // Convierte la fecha a un formato de texto
-                    Caducado
-            );
-
-            // Escribe la línea en el archivo
-            writer.write(lineaBono);
-            writer.close();
-            
-            System.out.println("[INFO] Bono guardado exitosamente en el archivo.");
-
-        } catch (Exception e) {
-            System.err.println("[ERROR] No se han podido guardar los bonos.\n");
-            e.printStackTrace();
-        }
-    }
-
-
-    /**
-     * Cargar el bono desde el archivo 'bonos-list.txt', situado en '/data'.
-     */
-    private void loadData() {
-        
+        IdBono = IdBono2;
+        TipoDeSesion = TipoDeSesion_;
+        DniUsuarioAsociado = DniUsuarioAsociado_;
+        UsosRestantes = UsosRestantes_;
+        AltaDelBono = AltaDelBono_; // Fecha actual
+        Caducado = Caducado_;
     }
 
     /**
@@ -123,5 +89,56 @@ public class Bono {
         return true;
     }
 
-    
+    public String getIdBono() {
+        return IdBono;
+    }
+
+    public void setIdBono(String idBono) {
+        this.IdBono = idBono;
+    }
+
+    // Getter y Setter para TipoDeSesion
+    public TamanoPista getTipoDeSesion() {
+        return TipoDeSesion;
+    }
+
+    public void setTipoDeSesion(TamanoPista tipoDeSesion) {
+        this.TipoDeSesion = tipoDeSesion;
+    }
+
+    // Getter y Setter para UsuarioAsociado
+    public String getDniUsuarioAsociado() {
+        return DniUsuarioAsociado;
+    }
+
+    public void setUsuarioAsociado(String DniUsuarioAsociado) {
+        this.DniUsuarioAsociado = DniUsuarioAsociado;
+    }
+
+    // Getter y Setter para UsosRestantes
+    public int getUsosRestantes() {
+        return UsosRestantes;
+    }
+
+    public void setUsosRestantes(int usosRestantes) {
+        this.UsosRestantes = usosRestantes;
+    }
+
+    // Getter y Setter para AltaDelBono
+    public Date getAltaDelBono() {
+        return AltaDelBono;
+    }
+
+    public void setAltaDelBono(Date altaDelBono) {
+        this.AltaDelBono = altaDelBono;
+    }
+
+    // Getter y Setter para Caducado
+    public boolean isCaducado() {
+        return Caducado;
+    }
+
+    public void setCaducado(boolean caducado) {
+        this.Caducado = caducado;
+    }
 }
